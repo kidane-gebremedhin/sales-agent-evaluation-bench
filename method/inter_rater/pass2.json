@@ -1,0 +1,307 @@
+{
+  "pass": 2,
+  "labeled_at_utc": "2026-04-29T18:13:28.936897+00:00",
+  "auto": true,
+  "labels": [
+    {
+      "task_id": "TB-0065",
+      "primary_dimension": "segment_reasoning",
+      "difficulty_bucket": "easy",
+      "n_deterministic_checks": 2,
+      "n_judge_checks": 0,
+      "passing_score": 0.7,
+      "primary_marker_label": 5,
+      "ground_truth_present": true
+    },
+    {
+      "task_id": "TB-1073",
+      "primary_dimension": "segment_reasoning",
+      "difficulty_bucket": "medium",
+      "n_deterministic_checks": 2,
+      "n_judge_checks": 0,
+      "passing_score": 0.7,
+      "primary_marker_label": 5,
+      "ground_truth_present": true
+    },
+    {
+      "task_id": "TB-1021",
+      "primary_dimension": "segment_reasoning",
+      "difficulty_bucket": "hard",
+      "n_deterministic_checks": 2,
+      "n_judge_checks": 0,
+      "passing_score": 0.7,
+      "primary_marker_label": 5,
+      "ground_truth_present": true
+    },
+    {
+      "task_id": "TB-1079",
+      "primary_dimension": "segment_reasoning",
+      "difficulty_bucket": "medium",
+      "n_deterministic_checks": 2,
+      "n_judge_checks": 0,
+      "passing_score": 0.7,
+      "primary_marker_label": 5,
+      "ground_truth_present": true
+    },
+    {
+      "task_id": "TB-1071",
+      "primary_dimension": "segment_reasoning",
+      "difficulty_bucket": "hard",
+      "n_deterministic_checks": 2,
+      "n_judge_checks": 0,
+      "passing_score": 0.7,
+      "primary_marker_label": 5,
+      "ground_truth_present": true
+    },
+    {
+      "task_id": "TB-1029",
+      "primary_dimension": "segment_reasoning",
+      "difficulty_bucket": "medium",
+      "n_deterministic_checks": 2,
+      "n_judge_checks": 0,
+      "passing_score": 0.7,
+      "primary_marker_label": 5,
+      "ground_truth_present": true
+    },
+    {
+      "task_id": "TB-1088",
+      "primary_dimension": "signal_grounding",
+      "difficulty_bucket": "medium",
+      "n_deterministic_checks": 3,
+      "n_judge_checks": 2,
+      "passing_score": 0.75,
+      "primary_marker_label": 5,
+      "ground_truth_present": false
+    },
+    {
+      "task_id": "TB-1090",
+      "primary_dimension": "signal_grounding",
+      "difficulty_bucket": "medium",
+      "n_deterministic_checks": 3,
+      "n_judge_checks": 2,
+      "passing_score": 0.75,
+      "primary_marker_label": 5,
+      "ground_truth_present": false
+    },
+    {
+      "task_id": "TB-1084",
+      "primary_dimension": "signal_grounding",
+      "difficulty_bucket": "hard",
+      "n_deterministic_checks": 3,
+      "n_judge_checks": 2,
+      "passing_score": 0.75,
+      "primary_marker_label": 5,
+      "ground_truth_present": false
+    },
+    {
+      "task_id": "TB-1092",
+      "primary_dimension": "signal_grounding",
+      "difficulty_bucket": "medium",
+      "n_deterministic_checks": 3,
+      "n_judge_checks": 2,
+      "passing_score": 0.75,
+      "primary_marker_label": 5,
+      "ground_truth_present": false
+    },
+    {
+      "task_id": "TB-0034",
+      "primary_dimension": "bench_honesty",
+      "difficulty_bucket": "hard",
+      "n_deterministic_checks": 3,
+      "n_judge_checks": 2,
+      "passing_score": 0.8,
+      "primary_marker_label": 5,
+      "ground_truth_present": true
+    },
+    {
+      "task_id": "TB-1049",
+      "primary_dimension": "bench_honesty",
+      "difficulty_bucket": "hard",
+      "n_deterministic_checks": 3,
+      "n_judge_checks": 2,
+      "passing_score": 0.8,
+      "primary_marker_label": 5,
+      "ground_truth_present": true
+    },
+    {
+      "task_id": "TB-3033",
+      "primary_dimension": "bench_honesty",
+      "difficulty_bucket": "hard",
+      "n_deterministic_checks": 3,
+      "n_judge_checks": 2,
+      "passing_score": 0.8,
+      "primary_marker_label": 5,
+      "ground_truth_present": true
+    },
+    {
+      "task_id": "TB-1063",
+      "primary_dimension": "bench_honesty",
+      "difficulty_bucket": "hard",
+      "n_deterministic_checks": 3,
+      "n_judge_checks": 2,
+      "passing_score": 0.8,
+      "primary_marker_label": 5,
+      "ground_truth_present": true
+    },
+    {
+      "task_id": "TB-1060",
+      "primary_dimension": "bench_honesty",
+      "difficulty_bucket": "hard",
+      "n_deterministic_checks": 3,
+      "n_judge_checks": 2,
+      "passing_score": 0.8,
+      "primary_marker_label": 5,
+      "ground_truth_present": true
+    },
+    {
+      "task_id": "TB-1052",
+      "primary_dimension": "bench_honesty",
+      "difficulty_bucket": "hard",
+      "n_deterministic_checks": 3,
+      "n_judge_checks": 2,
+      "passing_score": 0.8,
+      "primary_marker_label": 5,
+      "ground_truth_present": true
+    },
+    {
+      "task_id": "TB-0078",
+      "primary_dimension": "tone_preservation",
+      "difficulty_bucket": "medium",
+      "n_deterministic_checks": 6,
+      "n_judge_checks": 5,
+      "passing_score": 0.75,
+      "primary_marker_label": 3,
+      "ground_truth_present": false
+    },
+    {
+      "task_id": "TB-0052",
+      "primary_dimension": "tone_preservation",
+      "difficulty_bucket": "medium",
+      "n_deterministic_checks": 6,
+      "n_judge_checks": 5,
+      "passing_score": 0.75,
+      "primary_marker_label": 4,
+      "ground_truth_present": false
+    },
+    {
+      "task_id": "TB-0059",
+      "primary_dimension": "tone_preservation",
+      "difficulty_bucket": "medium",
+      "n_deterministic_checks": 6,
+      "n_judge_checks": 5,
+      "passing_score": 0.75,
+      "primary_marker_label": 4,
+      "ground_truth_present": false
+    },
+    {
+      "task_id": "TB-0038",
+      "primary_dimension": "tone_preservation",
+      "difficulty_bucket": "medium",
+      "n_deterministic_checks": 6,
+      "n_judge_checks": 5,
+      "passing_score": 0.75,
+      "primary_marker_label": 4,
+      "ground_truth_present": false
+    },
+    {
+      "task_id": "TB-0066",
+      "primary_dimension": "tone_preservation",
+      "difficulty_bucket": "medium",
+      "n_deterministic_checks": 6,
+      "n_judge_checks": 5,
+      "passing_score": 0.75,
+      "primary_marker_label": 4,
+      "ground_truth_present": false
+    },
+    {
+      "task_id": "TB-0045",
+      "primary_dimension": "tone_preservation",
+      "difficulty_bucket": "medium",
+      "n_deterministic_checks": 6,
+      "n_judge_checks": 5,
+      "passing_score": 0.75,
+      "primary_marker_label": 4,
+      "ground_truth_present": false
+    },
+    {
+      "task_id": "TB-0046",
+      "primary_dimension": "segment_reasoning",
+      "difficulty_bucket": "easy",
+      "n_deterministic_checks": 2,
+      "n_judge_checks": 0,
+      "passing_score": 0.7,
+      "primary_marker_label": 5,
+      "ground_truth_present": true
+    },
+    {
+      "task_id": "TB-0009",
+      "primary_dimension": "segment_reasoning",
+      "difficulty_bucket": "easy",
+      "n_deterministic_checks": 2,
+      "n_judge_checks": 0,
+      "passing_score": 0.7,
+      "primary_marker_label": 5,
+      "ground_truth_present": true
+    },
+    {
+      "task_id": "TB-0070",
+      "primary_dimension": "segment_reasoning",
+      "difficulty_bucket": "medium",
+      "n_deterministic_checks": 2,
+      "n_judge_checks": 0,
+      "passing_score": 0.7,
+      "primary_marker_label": 5,
+      "ground_truth_present": true
+    },
+    {
+      "task_id": "TB-0084",
+      "primary_dimension": "segment_reasoning",
+      "difficulty_bucket": "easy",
+      "n_deterministic_checks": 2,
+      "n_judge_checks": 0,
+      "passing_score": 0.7,
+      "primary_marker_label": 5,
+      "ground_truth_present": true
+    },
+    {
+      "task_id": "TB-1014",
+      "primary_dimension": "segment_reasoning",
+      "difficulty_bucket": "medium",
+      "n_deterministic_checks": 2,
+      "n_judge_checks": 0,
+      "passing_score": 0.7,
+      "primary_marker_label": 5,
+      "ground_truth_present": true
+    },
+    {
+      "task_id": "TB-1016",
+      "primary_dimension": "segment_reasoning",
+      "difficulty_bucket": "medium",
+      "n_deterministic_checks": 2,
+      "n_judge_checks": 0,
+      "passing_score": 0.7,
+      "primary_marker_label": 5,
+      "ground_truth_present": true
+    },
+    {
+      "task_id": "TB-3003",
+      "primary_dimension": "segment_reasoning",
+      "difficulty_bucket": "hard",
+      "n_deterministic_checks": 2,
+      "n_judge_checks": 0,
+      "passing_score": 0.7,
+      "primary_marker_label": 5,
+      "ground_truth_present": true
+    },
+    {
+      "task_id": "TB-1035",
+      "primary_dimension": "segment_reasoning",
+      "difficulty_bucket": "easy",
+      "n_deterministic_checks": 2,
+      "n_judge_checks": 0,
+      "passing_score": 0.7,
+      "primary_marker_label": 5,
+      "ground_truth_present": true
+    }
+  ]
+}

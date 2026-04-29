@@ -1,0 +1,69 @@
+{
+  "total": 237,
+  "partitions": [
+    {
+      "partition": "train",
+      "n": 119,
+      "by_primary_dimension": {
+        "tone_preservation": 23,
+        "gap_framing": 1,
+        "signal_grounding": 7,
+        "segment_reasoning": 56,
+        "bench_honesty": 32
+      },
+      "by_source_mode": {
+        "trace_derived": 55,
+        "programmatic": 45,
+        "multi_llm_synthesis": 18,
+        "hand_authored": 1
+      },
+      "by_difficulty": {
+        "medium": 42,
+        "hard": 46,
+        "easy": 27,
+        "adversarial": 4
+      }
+    },
+    {
+      "partition": "dev",
+      "n": 72,
+      "by_primary_dimension": {
+        "tone_preservation": 14,
+        "segment_reasoning": 39,
+        "bench_honesty": 15,
+        "signal_grounding": 4
+      },
+      "by_source_mode": {
+        "trace_derived": 32,
+        "programmatic": 32,
+        "multi_llm_synthesis": 8
+      },
+      "by_difficulty": {
+        "medium": 28,
+        "easy": 17,
+        "hard": 27
+      }
+    },
+    {
+      "partition": "held_out",
+      "n": 46,
+      "by_primary_dimension": {
+        "tone_preservation": 12,
+        "signal_grounding": 7,
+        "bench_honesty": 5,
+        "gap_framing": 5,
+        "segment_reasoning": 17
+      },
+      "by_source_mode": {
+        "hand_authored": 34,
+        "programmatic": 12
+      },
+      "by_difficulty": {
+        "adversarial": 33,
+        "hard": 3,
+        "medium": 7,
+        "easy": 3
+      }
+    }
+  ]
+}
