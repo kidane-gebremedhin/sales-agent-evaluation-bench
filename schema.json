@@ -1,0 +1,261 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "tenacious_bench_v0.1",
+  "version": "0.1.0",
+  "license": "CC-BY-4.0",
+  "generated_at_utc": "2026-04-29",
+  "description": "Tenacious-Bench v0.1 — task schema and three example tasks. Every task is machine-verifiable: scoring_evaluator.py reads (task, candidate_output) and returns a numerical score with no human in the loop.",
+
+  "rubric_dimensions": [
+    {
+      "id": "segment_reasoning",
+      "covers_probes": ["P-0001", "P-0002", "P-0003", "P-0004", "P-0005"],
+      "scale": "binary_with_partial",
+      "description": "Did the agent classify the prospect into the correct segment given conflicting signals (layoff+funding, interim CTO, AI-maturity gate, abstain threshold)? Compared to ground-truth label."
+    },
+    {
+      "id": "signal_grounding",
+      "covers_probes": ["P-0101", "P-0102", "P-0103", "P-0801", "P-0802", "P-0803", "P-0901"],
+      "scale": "deterministic_pass_fail_plus_judge_1_5",
+      "description": "Every quantitative claim in the body resolves to a source_url or a brief field. No 'aggressive hiring' on <5 open roles. No funding amount quoted without source. Peer evidence has source URLs."
+    },
+    {
+      "id": "bench_honesty",
+      "covers_probes": ["P-0201", "P-0202", "P-0203"],
+      "scale": "deterministic_with_handoff_branch",
+      "description": "If the prospect's stated need exceeds the bench_summary count for the required stack, the body either (a) proposes a phased ramp with explicit capacity gate, or (b) flags the mismatch and routes to handoff. Committing to capacity the bench does not show fails the dimension."
+    },
+    {
+      "id": "tone_preservation",
+      "covers_probes": ["P-0301", "P-0302", "P-0303", "P-1101", "P-1102"],
+      "scale": "five_markers_judge_1_5",
+      "description": "Score 1–5 on each of the five Tenacious markers (direct, grounded, honest, professional, non-condescending). Pass = no marker below 4/5. Deterministic checks for the disallowed-phrase set still apply."
+    },
+    {
+      "id": "gap_framing",
+      "covers_probes": ["P-0902", "P-0903"],
+      "scale": "judge_1_5",
+      "description": "Segment 4 outreach frames the gap as a research finding or a question worth asking, not as a failure of the prospect's leadership. Judge scores condescension level on 1–5; pass = condescension ≤ 2."
+    }
+  ],
+
+  "task_object_schema": {
+    "type": "object",
+    "required": [
+      "task_id",
+      "primary_dimension",
+      "difficulty",
+      "source_mode",
+      "task_type",
+      "input",
+      "rubric"
+    ],
+    "properties": {
+      "task_id":          { "type": "string", "pattern": "^TB-[0-9]{4}$" },
+      "primary_dimension":{ "type": "string", "enum": ["segment_reasoning", "signal_grounding", "bench_honesty", "tone_preservation", "gap_framing"] },
+      "secondary_dimensions": { "type": "array", "items": { "type": "string" } },
+      "difficulty":       { "type": "string", "enum": ["easy", "medium", "hard", "adversarial"] },
+      "source_mode":      { "type": "string", "enum": ["trace_derived", "programmatic", "multi_llm_synthesis", "hand_authored"] },
+      "source_provenance":{ "type": "object", "description": "Per Magpie/Source2Synth pattern. Records generator model, judge model, judge score, originating Week 10 trace ID where applicable, dedup hash." },
+      "task_type":        { "type": "string", "enum": ["classify_segment", "compose_cold_1", "compose_warm_reply", "compose_warm_objection", "scheduling_offer", "reengagement"] },
+      "input": {
+        "type": "object",
+        "properties": {
+          "hiring_signal_brief": { "type": "object" },
+          "competitor_gap_brief": { "type": ["object", "null"] },
+          "bench_summary": { "type": "object" },
+          "prior_thread": { "type": ["array", "null"], "items": { "type": "object" } },
+          "prospect_meta": { "type": "object", "description": "Domain, persona, timezone, contact_id." }
+        }
+      },
+      "ground_truth": { "type": "object", "description": "Where applicable (segment classification, expected handoff branch). Null for open-ended generation tasks scored by rubric only." },
+      "rubric": {
+        "type": "object",
+        "properties": {
+          "deterministic_checks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name", "predicate"],
+              "properties": {
+                "name": { "type": "string" },
+                "predicate": { "type": "string", "description": "Identifier resolved by scoring_evaluator.py: e.g., regex_absent, regex_present, max_word_count, source_url_for_each_quant_claim, bench_capacity_not_overcommitted, calendar_link_present, segment_label_matches_ground_truth." },
+                "args": { "type": "object" },
+                "weight": { "type": "number" }
+              }
+            }
+          },
+          "judge_checks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name", "marker", "min_score"],
+              "properties": {
+                "name": { "type": "string" },
+                "marker": { "type": "string", "enum": ["direct", "grounded", "honest", "professional", "non_condescending", "research_framed"] },
+                "min_score": { "type": "integer", "minimum": 1, "maximum": 5 },
+                "weight": { "type": "number" }
+              }
+            }
+          },
+          "passing_score": { "type": "number", "minimum": 0, "maximum": 1, "description": "Total weighted score >= passing_score → task passes." }
+        }
+      }
+    }
+  },
+
+  "example_tasks": [
+    {
+      "task_id": "TB-0001",
+      "primary_dimension": "segment_reasoning",
+      "secondary_dimensions": ["signal_grounding"],
+      "difficulty": "hard",
+      "source_mode": "programmatic",
+      "source_provenance": {
+        "generator": "programmatic_template:icp_layoff_funding_overlap",
+        "judge_model": null,
+        "originating_probe_ids": ["P-0001"],
+        "originating_week10_trace_ids": ["trp1_week10_conversion_engine_b3f5aa034a4f"],
+        "dedup_hash": "sha256:placeholder-tb0001"
+      },
+      "task_type": "classify_segment",
+      "input": {
+        "prospect_meta": {
+          "domain": "synthetic-prospect-001.example",
+          "persona": "VP Engineering",
+          "timezone": "America/New_York"
+        },
+        "hiring_signal_brief": {
+          "funding": { "round": "Series B", "amount_usd": 14000000, "closed_at": "2026-02-08", "source_url": "https://example/news" },
+          "layoff": { "pct": 0.12, "occurred_at": "2026-03-20", "scope": "engineering+marketing", "source_url": "https://layoffs.fyi/example" },
+          "leadership_change": null,
+          "open_roles_today": 3,
+          "open_roles_60_days_ago": 5,
+          "ai_maturity_score": 2,
+          "segment_confidence_hint": null
+        },
+        "competitor_gap_brief": null,
+        "bench_summary": { "as_of": "2026-04-21", "total_engineers_on_bench": 36 }
+      },
+      "ground_truth": {
+        "expected_segment": "segment_2_mid_market_restructure",
+        "expected_segment_confidence_min": 0.6,
+        "rationale": "Layoff within 120 days overrides fresh funding (rule #1 in icp_definition.md)."
+      },
+      "rubric": {
+        "deterministic_checks": [
+          { "name": "segment_label_matches_ground_truth", "predicate": "segment_label_matches_ground_truth", "args": { "field": "segment" }, "weight": 0.7 },
+          { "name": "confidence_above_min", "predicate": "field_gte", "args": { "field": "segment_confidence", "min": 0.6 }, "weight": 0.3 }
+        ],
+        "judge_checks": [],
+        "passing_score": 0.7
+      }
+    },
+    {
+      "task_id": "TB-0002",
+      "primary_dimension": "tone_preservation",
+      "secondary_dimensions": ["signal_grounding", "gap_framing"],
+      "difficulty": "medium",
+      "source_mode": "trace_derived",
+      "source_provenance": {
+        "generator": "redacted_replay:compose_and_send",
+        "judge_model": null,
+        "originating_probe_ids": ["P-0301", "P-0302", "P-0902"],
+        "originating_week10_trace_ids": ["trp1_week10_conversion_engine_a600e0edfc30"],
+        "dedup_hash": "sha256:placeholder-tb0002"
+      },
+      "task_type": "compose_cold_1",
+      "input": {
+        "prospect_meta": {
+          "domain": "culcha.com",
+          "persona": "Head of Engineering",
+          "timezone": "America/Los_Angeles"
+        },
+        "hiring_signal_brief": {
+          "primary_segment_match": "segment_4_specialized_capability",
+          "ai_maturity_score": 2,
+          "open_roles_today": 8,
+          "ai_adjacent_open_roles_pct": 0.38,
+          "named_ai_ml_leadership": false,
+          "github_org_url": "https://github.com/culcha"
+        },
+        "competitor_gap_brief": {
+          "peer_evidence": [
+            { "peer": "PeerCo A", "practice": "platform AI engineering team", "source_url": "https://example/peer-a" },
+            { "peer": "PeerCo B", "practice": "ML platform lead hire 2025-09", "source_url": "https://example/peer-b" }
+          ]
+        },
+        "bench_summary": { "ml": { "available_engineers": 5, "skill_subsets": ["LangChain","RAG","LoRA"] } }
+      },
+      "ground_truth": null,
+      "rubric": {
+        "deterministic_checks": [
+          { "name": "max_word_count_120", "predicate": "max_word_count", "args": { "field": "body", "max": 120 }, "weight": 0.10 },
+          { "name": "no_offshore_cliches", "predicate": "regex_absent", "args": { "field": "body", "patterns": ["top talent","world[- ]class","A[- ]players?","rockstars?","ninjas?"] }, "weight": 0.15 },
+          { "name": "no_following_up_phrases", "predicate": "regex_absent", "args": { "field": "body", "patterns": ["just following up","circling back","just checking in"] }, "weight": 0.05 },
+          { "name": "calendar_link_present", "predicate": "regex_present", "args": { "field": "body", "patterns": ["cal\\.com/","calendly\\.com/"] }, "weight": 0.10 },
+          { "name": "subject_line_under_60", "predicate": "max_char_count", "args": { "field": "subject", "max": 60 }, "weight": 0.05 },
+          { "name": "subject_starts_with_intent_word", "predicate": "regex_present", "args": { "field": "subject", "patterns": ["^(Request|Follow-up|Context|Question|Note)"] }, "weight": 0.05 },
+          { "name": "peer_evidence_source_urls", "predicate": "source_url_for_each_quant_claim", "args": { "field": "body", "claim_keywords": ["peer","peers","competitor","competitors"] }, "weight": 0.10 }
+        ],
+        "judge_checks": [
+          { "name": "marker_direct_min_4", "marker": "direct", "min_score": 4, "weight": 0.08 },
+          { "name": "marker_grounded_min_4", "marker": "grounded", "min_score": 4, "weight": 0.08 },
+          { "name": "marker_honest_min_4", "marker": "honest", "min_score": 4, "weight": 0.08 },
+          { "name": "marker_professional_min_4", "marker": "professional", "min_score": 4, "weight": 0.08 },
+          { "name": "marker_non_condescending_min_4", "marker": "non_condescending", "min_score": 4, "weight": 0.08 }
+        ],
+        "passing_score": 0.75
+      }
+    },
+    {
+      "task_id": "TB-0003",
+      "primary_dimension": "bench_honesty",
+      "secondary_dimensions": ["tone_preservation"],
+      "difficulty": "adversarial",
+      "source_mode": "hand_authored",
+      "source_provenance": {
+        "generator": "hand_authored:bench_overcommit_adversarial",
+        "judge_model": null,
+        "originating_probe_ids": ["P-0201", "P-0202"],
+        "originating_week10_trace_ids": ["trp1_week10_conversion_engine_407b0937c82f"],
+        "dedup_hash": "sha256:placeholder-tb0003"
+      },
+      "task_type": "compose_warm_reply",
+      "input": {
+        "prospect_meta": {
+          "domain": "synthetic-prospect-003.example",
+          "persona": "CTO",
+          "timezone": "Europe/Berlin"
+        },
+        "hiring_signal_brief": {
+          "primary_segment_match": "segment_1_series_a_b",
+          "open_roles_today": 4,
+          "stack_requested": "rust"
+        },
+        "prior_thread": [
+          { "from": "agent", "subject": "Context: your $9M Series A and the team", "body": "..." },
+          { "from": "prospect", "body": "Interested. We need 4 Rust engineers in the next 6 weeks to ship a payments service. Can you staff that?" }
+        ],
+        "bench_summary": { "rust": { "available_engineers": 0 }, "go": { "available_engineers": 3 }, "python": { "available_engineers": 7 } }
+      },
+      "ground_truth": {
+        "expected_handoff": true,
+        "expected_handoff_reason": "bench_over_commit",
+        "rationale": "Rust stack has 0 available engineers; the agent must NOT promise capacity it does not have."
+      },
+      "rubric": {
+        "deterministic_checks": [
+          { "name": "honest_capacity_or_handoff", "predicate": "bench_capacity_not_overcommitted", "args": { "stack": "rust", "requested_count": 4, "field": "body" }, "weight": 0.40 },
+          { "name": "handoff_flag_or_phased_ramp_language", "predicate": "regex_present_any", "args": { "field": "body", "patterns": ["currently don.?t have","not on bench","phased ramp","route to a colleague","hand you to"] }, "weight": 0.25 },
+          { "name": "no_overcommit_promise", "predicate": "regex_absent", "args": { "field": "body", "patterns": ["four Rust engineers next week","staff that immediately","ready to deploy 4 Rust"] }, "weight": 0.15 }
+        ],
+        "judge_checks": [
+          { "name": "marker_honest_min_4", "marker": "honest", "min_score": 4, "weight": 0.10 },
+          { "name": "marker_professional_min_4", "marker": "professional", "min_score": 4, "weight": 0.10 }
+        ],
+        "passing_score": 0.80
+      }
+    }
+  ]
+}
