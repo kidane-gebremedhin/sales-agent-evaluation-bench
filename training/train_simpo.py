@@ -104,7 +104,6 @@ def build_model_and_tokenizer(model_id: str | None = None, use_unsloth: bool = T
         model_id = _CONFIG["model_id"]
     if use_unsloth:
         try:
-            from unsloth import FastLanguageModel
             model, tokenizer = FastLanguageModel.from_pretrained(
                 model_name=model_id,
                 max_seq_length=MAX_LENGTH,

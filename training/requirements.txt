@@ -1,4 +1,9 @@
 # SimPO training — Unsloth + TRL on Colab T4 (16 GB VRAM)
+#
+# ON COLAB: Do NOT use `pip install -r requirements.txt` directly.
+# Instead follow the --no-deps pattern in README.md § Act IV, Step 1.
+# These version floors are for local / non-Colab environments only.
+#
 # Install: pip install -r training/requirements.txt
 
 # Core
@@ -15,3 +20,4 @@ peft>=0.13.0
 # Evaluation & logging
 scikit-learn>=1.4.0
 wandb>=0.18.0
+

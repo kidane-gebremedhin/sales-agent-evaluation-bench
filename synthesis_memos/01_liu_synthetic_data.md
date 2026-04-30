@@ -29,7 +29,7 @@ Three direct lifts:
    single generator family produces a recognizably "shaped"
    distribution; rotation across families is the simplest fix. The
    Tenacious-Bench synthesis pool rotates `deepseek/deepseek-v3.2`
-   and `qwen/qwen3.5-4b-instruct` per call (`SYNTH_MODELS` in
+   and `Qwen/Qwen3.5-4b-instruct` per call (`SYNTH_MODELS` in
    [`generation_scripts/04_multi_llm_synthesis.py`](../generation_scripts/04_multi_llm_synthesis.py)).
    The methodology.md commits to never using the same family for
    generation and judging on the same task.

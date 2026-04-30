@@ -37,7 +37,7 @@ CHECKPOINTS_DIR = REPO / "training" / "checkpoints"
 ABLATIONS_DIR = REPO / "ablations"
 RESULTS_PATH = ABLATIONS_DIR / "ablation_results.json"
 
-MODEL_ID = "qwen/qwen3.5-4b-instruct"
+MODEL_ID = "Qwen/Qwen3.5-4b-instruct"
 GAMMA_SWEEP = [0.3, 0.5, 1.0, 1.5]
 
 

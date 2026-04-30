@@ -21,7 +21,7 @@ Two non-negotiables (per challenge spec):
 
 | Timestamp (UTC) | Bucket | Provider / Model | Purpose | USD |
 |---|---|---|---|---|
-| 2026-04-29 17:46–17:54 | Dataset authoring | OpenRouter / `deepseek/deepseek-v3.2` and `qwen/qwen3.5-4b-instruct` (rotated) | Multi-LLM synthesis (53 generation calls, 60 attempts incl. retries). See [`generation_scripts/synthesis_log.jsonl`](generation_scripts/synthesis_log.jsonl). | 0.0209 |
+| 2026-04-29 17:46–17:54 | Dataset authoring | OpenRouter / `deepseek/deepseek-v3.2` and `Qwen/Qwen3.5-4b-instruct` (rotated) | Multi-LLM synthesis (53 generation calls, 60 attempts incl. retries). See [`generation_scripts/synthesis_log.jsonl`](generation_scripts/synthesis_log.jsonl). | 0.0209 |
 | 2026-04-29 17:55 | Dataset authoring | OpenRouter / `deepseek/deepseek-v3.2` | Live judge filter on multi-LLM synthesis pool (53 calls, 26 retained at threshold ≥ 4/5 on each of 3 dimensions). See [`generation_scripts/judge_filter_log.jsonl`](generation_scripts/judge_filter_log.jsonl). | 0.0081 |
 | 2026-04-29 (various) | Dataset authoring | local | Trace-derived, programmatic, hand-authored generation; offline stub judge on the three non-LLM pools. | 0.00 |
 | **Subtotal Act II** | | | | **0.0289** |

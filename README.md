@@ -64,35 +64,101 @@ python training_data/check_contamination.py            # verify held-out isolati
 ### Act IV — Train, Ablate, and Measure (Google Colab T4 + Unsloth)
 
 > **Runtime:** Free-tier Colab T4 (16 GB VRAM), 4-bit QLoRA via Unsloth.
-> Estimated wall-time: ~40-55 min per γ value, ~3-4 hours for the full sweep.
+> Estimated wall-time: ~40-60 min per γ value, ~3-4 hours for the full sweep.
 
-#### Step 0 — Clone and set up the Colab runtime
+> [!IMPORTANT]
+> **Do NOT replace Colab's pre-installed PyTorch.** Unsloth is tightly coupled
+> to the torch + CUDA combination that Colab ships. Upgrading/downgrading
+> torch is the #1 cause of dependency hell. The install steps below use
+> `--no-deps` everywhere to keep the Colab base environment intact.
+
+#### Step 0 — Open Colab and select T4 GPU
 
 Open a **Google Colab** notebook. Set the runtime to **T4 GPU**:
 `Runtime → Change runtime type → T4 GPU`.
 
 ```python
-# Clone the repo
-!git clone https://github.com/<your-handle>/sales-agent-evaluation-bench.git
+# Clone the repo (first run only)
+!git clone https://github.com/kidane-gebremedhin/sales-agent-evaluation-bench.git
 %cd sales-agent-evaluation-bench
 ```
 
-#### Step 1 — Install dependencies
+#### Step 0.5 — Check the Colab environment (diagnostic)
+
+Run this cell **before** installing anything so you know which
+torch / CUDA versions Colab currently ships:
 
 ```python
-# Unsloth (must be installed first for Colab compatibility)
-!pip install "unsloth[colab-new] @ git+https://github.com/unslothai/unsloth.git"
-
-# Core training stack
-!pip install -r training/requirements.txt
+import torch, os
+print(f"PyTorch  : {torch.__version__}")
+print(f"CUDA     : {torch.version.cuda}")
+print(f"GPU      : {torch.cuda.get_device_name(0)}")
+print(f"Colab env: {'yes' if 'COLAB_' in ''.join(os.environ) else 'no'}")
 ```
 
-Verify the install:
+Expected output (versions will drift over time):
+
+```
+PyTorch  : 2.6.0+cu124    # or similar — do NOT change this
+CUDA     : 12.4           # or 12.6 / 12.8
+GPU      : Tesla T4
+Colab env: yes
+```
+
+#### Step 1 — Install Unsloth + dependencies (no-deps pattern)
+
+> **Key principle:** install Unsloth *first*, then companion packages with
+> `--no-deps` so pip never pulls conflicting transitive dependencies.
 
 ```python
-!python -c "from unsloth import FastLanguageModel; print('Unsloth OK')"
-!python -c "from trl import CPOTrainer; print('TRL OK')"
+%%capture
+# ── 1a. Auto-detect torch/CUDA and install the correct Unsloth wheel ──
+# This uses Unsloth's official auto-installer on top of Colab's PyTorch.
+!pip install packaging   # ensure 'packaging' is available for the auto-detect script
+!wget -qO- https://raw.githubusercontent.com/unslothai/unsloth/main/unsloth/_auto_install.py | python - | sh
+
+# ── 1b. Install / refresh companion packages WITHOUT touching torch ──
+!pip install --no-deps trl peft accelerate bitsandbytes xformers triton \
+    cut_cross_entropy unsloth_zoo sentencepiece protobuf
+
+# ── 1c. Install remaining project deps (datasets, scikit-learn, wandb…) ──
+!pip install datasets scikit-learn wandb huggingface_hub hf_transfer
 ```
+
+> [!TIP]
+> The `%%capture` magic hides the verbose pip output. Remove it while
+> debugging if you need to see the full install log.
+
+**After this cell finishes → Restart the runtime once:**
+`Runtime → Restart session`, then continue from Step 1.1.
+
+#### Step 1.1 — Re-enter repo after restart
+
+```python
+%cd /content/sales-agent-evaluation-bench
+```
+
+#### Step 1.2 — Verify the install
+
+```python
+import torch; print("torch", torch.__version__, "CUDA", torch.version.cuda)
+
+from transformers import __version__ as tv; print("transformers", tv)
+from trl import __version__ as trl_v;       print("trl", trl_v)
+from peft import __version__ as peft_v;     print("peft", peft_v)
+
+from unsloth import FastLanguageModel;       print("Unsloth ✓")
+from trl import CPOTrainer;                  print("CPOTrainer ✓")
+```
+
+> [!WARNING]
+> If `from unsloth import FastLanguageModel` fails with an import error,
+> run the troubleshooting cell below and then restart the runtime again.
+>
+> ```python
+> !pip install --upgrade --force-reinstall --no-cache-dir --no-deps unsloth
+> !pip install --upgrade --force-reinstall --no-cache-dir --no-deps unsloth_zoo
+> ```
 
 #### Step 2 — Dry run (validate config without training)
 
@@ -107,15 +173,15 @@ SimPO training — γ=0.5, β=2.0
 Model: qwen/qwen3.5-4b-instruct
 LoRA: r=16, α=32
 [1/4] Loading preference pairs...
-  Total pairs: 3103
-  Train: ~2792, Eval: ~310
+  Total pairs: <from training_data/preference_pairs.jsonl>
+  Train: ~90%, Eval: ~10%
 [DRY RUN] Would train with the above config. Exiting.
 ```
 
 #### Step 3 — Train a single γ (quick test)
 
 ```python
-# Train with default γ=0.5 (disable W&B if not configured)
+# Train with default γ=0.5
 !WANDB_DISABLED=true python training/train_simpo.py --gamma 0.5
 ```
 
@@ -179,6 +245,23 @@ from google.colab import files
 files.download('results.zip')
 ```
 
+#### Step 7 — Resume quickly after Colab disconnect (optional)
+
+```python
+%cd /content/sales-agent-evaluation-bench
+!WANDB_DISABLED=true python training/train_simpo.py --resume training/checkpoints/gamma_0.5/checkpoint-200 --gamma 0.5
+```
+
+### Troubleshooting
+
+| Symptom | Fix |
+|---|---|
+| `ModuleNotFoundError: No module named 'unsloth'` | Restart runtime after Step 1, then re-run from Step 1.1 |
+| `RuntimeError: Torch = X.Y too new` | Unsloth hasn't released a wheel for your torch yet. Pin: `!pip install torch==2.6.0 --index-url https://download.pytorch.org/whl/cu124` then re-run Step 1 |
+| `CUDA out of memory` | Reduce `BATCH_SIZE` to 2 in `train_simpo.py`, or reduce `MAX_LENGTH` to 384 |
+| xformers / triton errors on T4 | `!pip install --no-deps xformers` (T4 doesn't support Flash Attention 2; Unsloth uses xformers instead) |
+| `ValueError: … simpo_gamma` | Upgrade TRL: `!pip install --no-deps trl>=0.12.0` |
+
 ### Training configuration reference
 
 | Parameter | Value | Rationale |
@@ -189,6 +272,6 @@ files.download('results.zip')
 | β (reward scaling) | 2.0 | SimPO recommended default |
 | γ (target margin) | sweep: 0.3, 0.5, 1.0, 1.5 | Predicted optimal: 0.3–0.8 for short emails |
 | Batch size | 4 × 4 grad accum = 16 eff. | T4 VRAM budget |
-| Precision | bf16 + 4-bit QLoRA | Via Unsloth |
+| Precision | fp16 + 4-bit QLoRA | Via Unsloth (T4 lacks native bf16; fp16 is used) |
 | Epochs | 3 | — |
 | Max sequence length | 512 tokens | — |

@@ -268,7 +268,7 @@ def live_marker_score(marker: str, body: str, task: dict) -> int:
     api_key = os.environ.get("OPENROUTER_API_KEY")
     if not api_key:
         raise RuntimeError("TB_USE_LIVE_JUDGE=1 but OPENROUTER_API_KEY is unset")
-    model = os.environ.get("TB_JUDGE_MODEL", "qwen/qwen3.5-4b-instruct")
+    model = os.environ.get("TB_JUDGE_MODEL", "Qwen/Qwen3.5-4b-instruct")
     prompt = (
         f"You are scoring a Tenacious sales outreach draft on the marker '{marker}'. "
         f"Return a single integer 1-5. Marker definitions: see Tenacious style guide. "
