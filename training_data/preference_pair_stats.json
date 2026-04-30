@@ -1,28 +1,28 @@
 {
-  "total_pairs": 3103,
-  "skipped_quality_filter": 1760,
-  "unique_tasks_covered": 114,
+  "total_pairs": 1047,
+  "skipped_quality_filter": 1265,
+  "unique_tasks_covered": 43,
   "pairs_per_dimension": {
-    "tone_preservation": 1656,
+    "tone_preservation": 72,
     "gap_framing": 72,
-    "signal_grounding": 504,
-    "segment_reasoning": 327,
-    "bench_honesty": 544
+    "signal_grounding": 432,
+    "segment_reasoning": 80,
+    "bench_honesty": 391
   },
   "failed_marker_histogram": {
-    "direct": 1250,
-    "grounded": 1686,
-    "professional": 1904,
-    "honest": 1744,
-    "non_condescending": 872,
-    "segment_mismatch": 327
+    "direct": 470,
+    "grounded": 612,
+    "professional": 683,
+    "honest": 568,
+    "non_condescending": 284,
+    "segment_mismatch": 80
   },
-  "avg_score_delta": 0.2639,
+  "avg_score_delta": 0.2802,
   "preference_leakage_policy": {
     "chosen_generator_family": "template:style_guide",
     "rejected_generator_family": "template:style_guide_bad",
     "judge_family": "offline_stub_evaluator",
-    "note": "No model-family overlap. In live mode: chosen rewrites via DeepSeek V3.2; judge via qwen/qwen/qwen3.5-4b-instruct."
+    "note": "No model-family overlap. In live mode: chosen rewrites via DeepSeek V3.2; judge via qwen/qwen3.5-4b-instruct."
   },
   "simpo_training_config": {
     "algorithm": "SimPO",
@@ -34,7 +34,7 @@
       1.5
     ],
     "gamma_default": 0.5,
-    "backbone": "qwen/qwen/qwen3.5-4b-instruct",
+    "backbone": "qwen/qwen3.5-4b-instruct",
     "adapter": "LoRA",
     "lora_rank": 16,
     "lora_alpha": 32,
@@ -42,5 +42,11 @@
     "max_length": 512,
     "num_epochs": 3,
     "framework": "Unsloth + TRL"
+  },
+  "decontamination": {
+    "eval_reference_tasks": 118,
+    "skipped_tasks": 74,
+    "ngram_n": 8,
+    "cosine_threshold": 0.85
   }
 }

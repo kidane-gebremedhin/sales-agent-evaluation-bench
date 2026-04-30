@@ -4,7 +4,7 @@
 
 This directory contains the SimPO training pipeline for the Tenacious
 preference-tuned critic (Path B). The critic is a LoRA-adapted
-**qwen/qwen/qwen3.5-4b-instruct** trained with **SimPO** (reference-free
+**qwen/qwen3.5-4b-instruct** trained with **SimPO** (reference-free
 preference optimization) to score and reject tonally non-adherent sales
 outreach drafts.
 
@@ -71,7 +71,7 @@ python training/train_simpo.py --sweep --dry-run
 | Parameter | Value | Source |
 |---|---|---|
 | Algorithm | SimPO (via TRL CPOTrainer) | Meng et al. NeurIPS 2024 |
-| Backbone | qwen/qwen/qwen3.5-4b-instruct | methodology.md |
+| Backbone | qwen/qwen3.5-4b-instruct | methodology.md |
 | Adapter | LoRA r=16, α=32 | preference_pair_stats.json |
 | β (reward scaling) | 2.0 | SimPO recommended |
 | γ (target margin) | sweep: 0.3, 0.5, 1.0, 1.5 | synthesis_memos/04 |

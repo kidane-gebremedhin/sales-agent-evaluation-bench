@@ -6,7 +6,7 @@
 ## Path declaration — Path B (preference-tuned judge or critic)
 
 I am taking **Path B**. The trained component will be a small
-preference-scored critic (qwen/qwen/qwen3.5-4b-instruct with LoRA), trained
+preference-scored critic (qwen/qwen3.5-4b-instruct with LoRA), trained
 with **SimPO** as the algorithm of choice (justification below). The
 critic will be deployed as a rejection-sampling layer in front of the
 Week 10 composer's existing tone-preservation check — it scores agent
@@ -53,7 +53,7 @@ not exhibit because its scoring is per-message, not per-trajectory
 
 - **SimPO** (Meng, Xia, Chen, NeurIPS 2024) is reference-free, halving
   GPU memory versus DPO at the same batch size — material on a Colab
-  T4 with the qwen/qwen/qwen3.5-4b-instruct base. The implicit reward is length-
+  T4 with the qwen/qwen3.5-4b-instruct base. The implicit reward is length-
   normalized log-prob, which avoids DPO's documented length bias on
   short, format-constrained generations like a 120-word cold email.
 - **DPO** carries the reference model in memory and on every step;
@@ -122,7 +122,7 @@ Rotation policy committed before Day 2 authoring begins:
 | Role | Models in rotation |
 |---|---|
 | Hard-seed authoring (frontier) | Claude Sonnet 4.6 OR GPT-class (one frontier model used for ≤ 50 seeds). |
-| Bulk-variation generator (dev) | qwen/qwen/qwen3.5-4b-instruct and DeepSeek V3.2 (rotated per-task). |
+| Bulk-variation generator (dev) | qwen/qwen3.5-4b-instruct and DeepSeek V3.2 (rotated per-task). |
 | Quality-filter judge | A model NOT used to generate that task. Prometheus-2 7B (open) for high-volume; eval-tier reserved for the calibration spot-check. |
 
 Never use the same model family to generate and judge the same task.

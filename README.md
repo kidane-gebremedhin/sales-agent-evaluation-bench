@@ -104,7 +104,7 @@ Expected output:
 
 ```
 SimPO training — γ=0.5, β=2.0
-Model: qwen/qwen/qwen3.5-4b-instruct
+Model: qwen/qwen3.5-4b-instruct
 LoRA: r=16, α=32
 [1/4] Loading preference pairs...
   Total pairs: 3103
@@ -184,7 +184,7 @@ files.download('results.zip')
 | Parameter | Value | Rationale |
 |---|---|---|
 | Algorithm | SimPO | Reference-free → fits T4 VRAM (no frozen ref model) |
-| Backbone | `qwen/qwen/qwen3.5-4b-instruct` | Runs on T4 with 4-bit QLoRA + gradient checkpointing |
+| Backbone | `qwen/qwen3.5-4b-instruct` | Runs on T4 with 4-bit QLoRA + gradient checkpointing |
 | LoRA rank / alpha | 16 / 32 | Standard for 1–2B models |
 | β (reward scaling) | 2.0 | SimPO recommended default |
 | γ (target margin) | sweep: 0.3, 0.5, 1.0, 1.5 | Predicted optimal: 0.3–0.8 for short emails |

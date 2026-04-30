@@ -46,7 +46,7 @@ COST_LOG = REPO / "cost_log.md"
 # ---------------------------------------------------------------------------
 # Defaults (from preference_pair_stats.json)
 # ---------------------------------------------------------------------------
-_CONFIG = {"model_id": "qwen/qwen/qwen3.5-4b-instruct"}
+_CONFIG = {"model_id": "qwen/qwen3.5-4b-instruct"}
 MODEL_ID = _CONFIG["model_id"]
 LORA_RANK = 16
 LORA_ALPHA = 32

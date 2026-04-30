@@ -105,7 +105,7 @@ classifier). v0.2 will add ≈30 hand-authored gap_framing tasks.
 | multi_llm_synthesis | 26 | 10.9 | 0.021 |
 
 The synthesis pool was authored by `deepseek/deepseek-v3.2` and
-`qwen/qwen/qwen3.5-4b-instruct` rotated per call (53 generations,
+`qwen/qwen3.5-4b-instruct` rotated per call (53 generations,
 26 retained after live judge filter). Live judge model:
 `deepseek/deepseek-v3.2`. Preference-leakage policy committed in
 [`methodology.md`](methodology.md): a model never judges a task it

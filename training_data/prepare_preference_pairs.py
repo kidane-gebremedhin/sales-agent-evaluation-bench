@@ -36,6 +36,8 @@ sys.path.insert(0, str(REPO))
 from scoring_evaluator import score_task  # noqa: E402
 
 TRAIN_PATH = REPO / "tenacious_bench_v0.1" / "train" / "tasks.jsonl"
+DEV_PATH = REPO / "tenacious_bench_v0.1" / "dev" / "tasks.jsonl"
+HELD_OUT_PATH = REPO / "tenacious_bench_v0.1" / "held_out" / "tasks.jsonl"
 OUT_PATH = REPO / "training_data" / "preference_pairs.jsonl"
 STATS_PATH = REPO / "training_data" / "preference_pair_stats.json"
 
@@ -58,6 +60,81 @@ BANNED_PHRASES = [
 ]
 
 SENDERS = ["Yabi", "Ruth", "Mikael", "Sara", "Daniel"]
+
+
+def _tokenize(text: str) -> list[str]:
+    return re.findall(r"\w+", text.lower())
+
+
+def _ngrams(tokens: list[str], n: int) -> set[tuple[str, ...]]:
+    return {tuple(tokens[i:i+n]) for i in range(len(tokens) - n + 1)}
+
+
+def _load_jsonl(path: Path) -> list[dict]:
+    items = []
+    with open(path) as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                items.append(json.loads(line))
+    return items
+
+
+def _task_text(task: dict) -> str:
+    parts = []
+    inp = task.get("input", {})
+    if isinstance(inp, dict):
+        signal = inp.get("hiring_signal_brief", "")
+        if isinstance(signal, dict):
+            parts.append(json.dumps(signal))
+        elif isinstance(signal, str):
+            parts.append(signal)
+        prospect = inp.get("prospect", {})
+        if isinstance(prospect, dict):
+            parts.append(prospect.get("company_name", ""))
+            parts.append(prospect.get("contact_name", ""))
+    parts.append(task.get("task_id", ""))
+    return " ".join(str(p) for p in parts)
+
+
+def _max_tfidf_similarity(text: str, ref_texts: list[str], threshold: float = 0.85) -> float:
+    import math
+
+    all_texts = [text] + ref_texts
+    df = {}
+    for t in all_texts:
+        for tok in set(_tokenize(t)):
+            df[tok] = df.get(tok, 0) + 1
+    N = len(all_texts)
+
+    def tfidf_vec(t: str) -> dict[str, float]:
+        tf = {}
+        for tok in _tokenize(t):
+            tf[tok] = tf.get(tok, 0) + 1
+        vec = {}
+        for tok, count in tf.items():
+            idf = math.log((N + 1) / (df.get(tok, 0) + 1))
+            vec[tok] = count * idf
+        return vec
+
+    def cosine(a: dict[str, float], b: dict[str, float]) -> float:
+        keys = set(a) & set(b)
+        if not keys:
+            return 0.0
+        dot = sum(a[k] * b[k] for k in keys)
+        na = math.sqrt(sum(v ** 2 for v in a.values()))
+        nb = math.sqrt(sum(v ** 2 for v in b.values()))
+        return dot / (na * nb) if na * nb > 0 else 0.0
+
+    src_vec = tfidf_vec(text)
+    max_sim = 0.0
+    for rt in ref_texts:
+        sim = cosine(src_vec, tfidf_vec(rt))
+        if sim > max_sim:
+            max_sim = sim
+        if sim >= threshold:
+            return sim
+    return max_sim
 
 
 def _norm_signal(inp: dict) -> dict:
@@ -505,22 +582,35 @@ def main():
     print("Act III — Path B: Preparing SimPO preference pairs")
     print("=" * 70)
 
-    tasks = []
-    with open(TRAIN_PATH) as f:
-        for line in f:
-            line = line.strip()
-            if line:
-                tasks.append(json.loads(line))
+    tasks = _load_jsonl(TRAIN_PATH)
+    eval_tasks = _load_jsonl(DEV_PATH) + _load_jsonl(HELD_OUT_PATH)
+    eval_texts = [_task_text(t) for t in eval_tasks]
+    eval_ngrams = set()
+    for et in eval_texts:
+        eval_ngrams.update(_ngrams(_tokenize(et), 8))
     print(f"Loaded {len(tasks)} training tasks")
 
     pairs = []
     seen = set()
     skip_q = 0
+    skipped_contamination = 0
 
     for task in tasks:
+        # Decontamination gate:
+        # skip any train task whose prompt overlaps dev/held-out by 8-gram
+        # or exceeds cosine threshold used by check_contamination.py.
+        prompt_probe = _build_prompt(task)
+        probe_ngrams = _ngrams(_tokenize(prompt_probe), 8)
+        if probe_ngrams & eval_ngrams:
+            skipped_contamination += 1
+            continue
+        if _max_tfidf_similarity(prompt_probe, eval_texts, threshold=0.85) >= 0.85:
+            skipped_contamination += 1
+            continue
+
         ctx = _extract_context(task)
         dim = task.get("primary_dimension", "tone_preservation")
-        prompt = _build_prompt(task)
+        prompt = prompt_probe
 
         # ── Segment-reasoning tasks are classification, not composition ──
         if dim == "segment_reasoning" and task.get("task_type") == "classify_segment":
@@ -651,14 +741,14 @@ def main():
             "rejected_generator_family": "template:style_guide_bad",
             "judge_family": "offline_stub_evaluator",
             "note": ("No model-family overlap. In live mode: chosen rewrites via "
-                     "DeepSeek V3.2; judge via qwen/qwen/qwen3.5-4b-instruct."),
+                     "DeepSeek V3.2; judge via qwen/qwen3.5-4b-instruct."),
         },
         "simpo_training_config": {
             "algorithm": "SimPO",
             "beta": 2.0,
             "gamma_sweep": [0.3, 0.5, 1.0, 1.5],
             "gamma_default": 0.5,
-            "backbone": "qwen/qwen/qwen3.5-4b-instruct",
+            "backbone": "qwen/qwen3.5-4b-instruct",
             "adapter": "LoRA",
             "lora_rank": 16,
             "lora_alpha": 32,
@@ -667,12 +757,19 @@ def main():
             "num_epochs": 3,
             "framework": "Unsloth + TRL",
         },
+        "decontamination": {
+            "eval_reference_tasks": len(eval_tasks),
+            "skipped_tasks": skipped_contamination,
+            "ngram_n": 8,
+            "cosine_threshold": 0.85,
+        },
     }
     with open(STATS_PATH, "w") as f:
         json.dump(stats, f, indent=2)
 
     print(f"\nTotal preference pairs: {len(pairs)}")
     print(f"  Skipped (quality): {skip_q}")
+    print(f"  Skipped (contamination): {skipped_contamination}")
     print(f"  Unique tasks: {stats['unique_tasks_covered']}")
     print(f"  Avg score delta: {stats['avg_score_delta']}")
     print(f"\nPairs per dimension:")

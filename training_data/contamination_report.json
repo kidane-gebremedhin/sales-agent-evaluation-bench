@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "training_pairs_count": 1047,
+  "eval_tasks_count": 118,
+  "checks": {
+    "ngram_overlap_8": {
+      "passed": true,
+      "violation_count": 0,
+      "violations": []
+    },
+    "cosine_similarity_0.85": {
+      "passed": true,
+      "violation_count": 0,
+      "max_similarity": 0.5718,
+      "violations": []
+    },
+    "task_id_disjointness": {
+      "passed": true,
+      "violation_count": 0,
+      "violations": []
+    }
+  }
+}
