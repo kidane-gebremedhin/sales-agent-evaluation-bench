@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Act IV — SimPO training with Unsloth + TRL.
 
-Trains a LoRA-adapted Qwen2.5-1.5B-Instruct critic using SimPO on the
+Trains a LoRA-adapted qwen/qwen3.5-4b-instruct critic using SimPO on the
 preference pairs from Act III.  Designed for a free Colab T4 (16 GB VRAM).
 
 Usage:
@@ -46,7 +46,7 @@ COST_LOG = REPO / "cost_log.md"
 # ---------------------------------------------------------------------------
 # Defaults (from preference_pair_stats.json)
 # ---------------------------------------------------------------------------
-_CONFIG = {"model_id": "Qwen/Qwen2.5-1.5B-Instruct"}
+_CONFIG = {"model_id": "qwen/qwen/qwen3.5-4b-instruct"}
 MODEL_ID = _CONFIG["model_id"]
 LORA_RANK = 16
 LORA_ALPHA = 32
@@ -248,7 +248,6 @@ def train_single_gamma(
         eval_steps=SAVE_STEPS,
 
         # Precision
-        bf16=True,
         gradient_checkpointing=True,
 
         # Misc
@@ -258,6 +257,9 @@ def train_single_gamma(
 
         # Resume
         resume_from_checkpoint=resume_from,
+
+        bf16 = False,   # Set this to False for Colab T4
+        fp16 = True,    # Set this to True for Colab T4
     )
 
     trainer = CPOTrainer(

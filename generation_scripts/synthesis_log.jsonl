@@ -1,49 +1,49 @@
 {"seed": ["P-0001"], "i": 0, "status": "ok", "task_id": "TB-3001", "model": "deepseek/deepseek-v3.2", "cost_usd": 0.00019502}
-{"seed": ["P-0001"], "i": 1, "status": "ok", "task_id": "TB-3002", "model": "qwen/qwen3-next-80b-a3b-instruct", "cost_usd": 0.0003452}
+{"seed": ["P-0001"], "i": 1, "status": "ok", "task_id": "TB-3002", "model": "qwen/qwen/qwen3.5-4b-instruct", "cost_usd": 0.0003452}
 {"seed": ["P-0001"], "i": 2, "status": "ok", "task_id": "TB-3003", "model": "deepseek/deepseek-v3.2", "cost_usd": 0.000218071}
-{"seed": ["P-0001"], "i": 3, "status": "ok", "task_id": "TB-3004", "model": "qwen/qwen3-next-80b-a3b-instruct", "cost_usd": 0.0003617}
+{"seed": ["P-0001"], "i": 3, "status": "ok", "task_id": "TB-3004", "model": "qwen/qwen/qwen3.5-4b-instruct", "cost_usd": 0.0003617}
 {"seed": ["P-0001"], "i": 4, "status": "ok", "task_id": "TB-3005", "model": "deepseek/deepseek-v3.2", "cost_usd": 0.00021228}
-{"seed": ["P-0001"], "i": 5, "status": "ok", "task_id": "TB-3006", "model": "qwen/qwen3-next-80b-a3b-instruct", "cost_usd": 0.0003705}
+{"seed": ["P-0001"], "i": 5, "status": "ok", "task_id": "TB-3006", "model": "qwen/qwen/qwen3.5-4b-instruct", "cost_usd": 0.0003705}
 {"seed": ["P-0001"], "i": 6, "status": "ok", "task_id": "TB-3007", "model": "deepseek/deepseek-v3.2", "cost_usd": 0.00020392}
-{"seed": ["P-0001"], "i": 7, "status": "ok", "task_id": "TB-3008", "model": "qwen/qwen3-next-80b-a3b-instruct", "cost_usd": 0.0004479}
+{"seed": ["P-0001"], "i": 7, "status": "ok", "task_id": "TB-3008", "model": "qwen/qwen/qwen3.5-4b-instruct", "cost_usd": 0.0004479}
 {"seed": ["P-0001"], "i": 8, "status": "ok", "task_id": "TB-3009", "model": "deepseek/deepseek-v3.2", "cost_usd": 0.00023188}
-{"seed": ["P-0001"], "i": 9, "status": "ok", "task_id": "TB-3010", "model": "qwen/qwen3-next-80b-a3b-instruct", "cost_usd": 0.0004104}
+{"seed": ["P-0001"], "i": 9, "status": "ok", "task_id": "TB-3010", "model": "qwen/qwen/qwen3.5-4b-instruct", "cost_usd": 0.0004104}
 {"seed": ["P-0001"], "i": 10, "status": "ok", "task_id": "TB-3011", "model": "deepseek/deepseek-v3.2", "cost_usd": 0.0001973}
-{"seed": ["P-0001"], "i": 11, "status": "ok", "task_id": "TB-3012", "model": "qwen/qwen3-next-80b-a3b-instruct", "cost_usd": 0.000248235}
+{"seed": ["P-0001"], "i": 11, "status": "ok", "task_id": "TB-3012", "model": "qwen/qwen/qwen3.5-4b-instruct", "cost_usd": 0.000248235}
 {"seed": ["P-0002"], "i": 0, "status": "ok", "task_id": "TB-3013", "model": "deepseek/deepseek-v3.2", "cost_usd": 0.00016434}
-{"seed": ["P-0002"], "i": 1, "status": "ok", "task_id": "TB-3014", "model": "qwen/qwen3-next-80b-a3b-instruct", "cost_usd": 0.0003246}
+{"seed": ["P-0002"], "i": 1, "status": "ok", "task_id": "TB-3014", "model": "qwen/qwen/qwen3.5-4b-instruct", "cost_usd": 0.0003246}
 {"seed": ["P-0002"], "i": 2, "status": "ok", "task_id": "TB-3015", "model": "deepseek/deepseek-v3.2", "cost_usd": 0.00015864}
-{"seed": ["P-0002"], "i": 3, "status": "ok", "task_id": "TB-3016", "model": "qwen/qwen3-next-80b-a3b-instruct", "cost_usd": 0.00023054}
+{"seed": ["P-0002"], "i": 3, "status": "ok", "task_id": "TB-3016", "model": "qwen/qwen/qwen3.5-4b-instruct", "cost_usd": 0.00023054}
 {"seed": ["P-0002"], "i": 4, "status": "ok", "task_id": "TB-3017", "model": "deepseek/deepseek-v3.2", "cost_usd": 0.00015446}
-{"seed": ["P-0002"], "i": 5, "status": "ok", "task_id": "TB-3018", "model": "qwen/qwen3-next-80b-a3b-instruct", "cost_usd": 0.00020854}
+{"seed": ["P-0002"], "i": 5, "status": "ok", "task_id": "TB-3018", "model": "qwen/qwen/qwen3.5-4b-instruct", "cost_usd": 0.00020854}
 {"seed": ["P-0002"], "i": 6, "status": "ok", "task_id": "TB-3019", "model": "deepseek/deepseek-v3.2", "cost_usd": 0.000456}
-{"seed": ["P-0002"], "i": 7, "status": "ok", "task_id": "TB-3020", "model": "qwen/qwen3-next-80b-a3b-instruct", "cost_usd": 0.0002538}
+{"seed": ["P-0002"], "i": 7, "status": "ok", "task_id": "TB-3020", "model": "qwen/qwen/qwen3.5-4b-instruct", "cost_usd": 0.0002538}
 {"seed": ["P-0301", "P-0302"], "i": 0, "status": "ok", "task_id": "TB-3021", "model": "deepseek/deepseek-v3.2", "cost_usd": 0.00069654}
-{"seed": ["P-0301", "P-0302"], "i": 1, "status": "ok", "task_id": "TB-3022", "model": "qwen/qwen3-next-80b-a3b-instruct", "cost_usd": 0.0003254}
+{"seed": ["P-0301", "P-0302"], "i": 1, "status": "ok", "task_id": "TB-3022", "model": "qwen/qwen/qwen3.5-4b-instruct", "cost_usd": 0.0003254}
 {"seed": ["P-0301", "P-0302"], "i": 2, "status": "ok", "task_id": "TB-3023", "model": "deepseek/deepseek-v3.2", "cost_usd": 0.000198359}
-{"seed": ["P-0301", "P-0302"], "i": 3, "status": "ok", "task_id": "TB-3024", "model": "qwen/qwen3-next-80b-a3b-instruct", "cost_usd": 0.000252915}
+{"seed": ["P-0301", "P-0302"], "i": 3, "status": "ok", "task_id": "TB-3024", "model": "qwen/qwen/qwen3.5-4b-instruct", "cost_usd": 0.000252915}
 {"seed": ["P-0301", "P-0302"], "i": 4, "status": "ok", "task_id": "TB-3025", "model": "deepseek/deepseek-v3.2", "cost_usd": 0.00076384}
-{"seed": ["P-0301", "P-0302"], "i": 5, "status": "ok", "task_id": "TB-3026", "model": "qwen/qwen3-next-80b-a3b-instruct", "cost_usd": 0.000241215}
+{"seed": ["P-0301", "P-0302"], "i": 5, "status": "ok", "task_id": "TB-3026", "model": "qwen/qwen/qwen3.5-4b-instruct", "cost_usd": 0.000241215}
 {"seed": ["P-0301", "P-0302"], "i": 6, "status": "ok", "task_id": "TB-3027", "model": "deepseek/deepseek-v3.2", "cost_usd": 0.000206759}
-{"seed": ["P-0301", "P-0302"], "i": 7, "status": "ok", "task_id": "TB-3028", "model": "qwen/qwen3-next-80b-a3b-instruct", "cost_usd": 0.000256815}
+{"seed": ["P-0301", "P-0302"], "i": 7, "status": "ok", "task_id": "TB-3028", "model": "qwen/qwen/qwen3.5-4b-instruct", "cost_usd": 0.000256815}
 {"seed": ["P-0301", "P-0302"], "i": 8, "status": "ok", "task_id": "TB-3029", "model": "deepseek/deepseek-v3.2", "cost_usd": 0.00019446}
-{"seed": ["P-0301", "P-0302"], "i": 9, "status": "ok", "task_id": "TB-3030", "model": "qwen/qwen3-next-80b-a3b-instruct", "cost_usd": 0.0003397}
+{"seed": ["P-0301", "P-0302"], "i": 9, "status": "ok", "task_id": "TB-3030", "model": "qwen/qwen/qwen3.5-4b-instruct", "cost_usd": 0.0003397}
 {"seed": ["P-0301", "P-0302"], "i": 10, "status": "ok", "task_id": "TB-3031", "model": "deepseek/deepseek-v3.2", "cost_usd": 0.000214319}
-{"seed": ["P-0301", "P-0302"], "i": 11, "status": "ok", "task_id": "TB-3032", "model": "qwen/qwen3-next-80b-a3b-instruct", "cost_usd": 0.00034082}
+{"seed": ["P-0301", "P-0302"], "i": 11, "status": "ok", "task_id": "TB-3032", "model": "qwen/qwen/qwen3.5-4b-instruct", "cost_usd": 0.00034082}
 {"seed": ["P-0201", "P-0202"], "i": 0, "status": "ok", "task_id": "TB-3033", "model": "deepseek/deepseek-v3.2", "cost_usd": 0.00085792}
-{"seed": ["P-0201", "P-0202"], "i": 1, "status": "ok", "task_id": "TB-3034", "model": "qwen/qwen3-next-80b-a3b-instruct", "cost_usd": 0.000340275}
+{"seed": ["P-0201", "P-0202"], "i": 1, "status": "ok", "task_id": "TB-3034", "model": "qwen/qwen/qwen3.5-4b-instruct", "cost_usd": 0.000340275}
 {"seed": ["P-0201", "P-0202"], "i": 2, "status": "ok", "task_id": "TB-3035", "model": "deepseek/deepseek-v3.2", "cost_usd": 0.000220472}
-{"seed": ["P-0201", "P-0202"], "i": 3, "status": "ok", "task_id": "TB-3036", "model": "qwen/qwen3-next-80b-a3b-instruct", "cost_usd": 0.000312195}
+{"seed": ["P-0201", "P-0202"], "i": 3, "status": "ok", "task_id": "TB-3036", "model": "qwen/qwen/qwen3.5-4b-instruct", "cost_usd": 0.000312195}
 {"seed": ["P-0201", "P-0202"], "i": 4, "status": "ok", "task_id": "TB-3037", "model": "deepseek/deepseek-v3.2", "cost_usd": 0.00085792}
-{"seed": ["P-0201", "P-0202"], "i": 5, "status": "ok", "task_id": "TB-3038", "model": "qwen/qwen3-next-80b-a3b-instruct", "cost_usd": 0.000298155}
+{"seed": ["P-0201", "P-0202"], "i": 5, "status": "ok", "task_id": "TB-3038", "model": "qwen/qwen/qwen3.5-4b-instruct", "cost_usd": 0.000298155}
 {"seed": ["P-0201", "P-0202"], "i": 6, "status": "ok", "task_id": "TB-3039", "model": "deepseek/deepseek-v3.2", "cost_usd": 0.000271}
-{"seed": ["P-0201", "P-0202"], "i": 7, "status": "ok", "task_id": "TB-3040", "model": "qwen/qwen3-next-80b-a3b-instruct", "cost_usd": 0.000327795}
+{"seed": ["P-0201", "P-0202"], "i": 7, "status": "ok", "task_id": "TB-3040", "model": "qwen/qwen/qwen3.5-4b-instruct", "cost_usd": 0.000327795}
 {"seed": ["P-0201", "P-0202"], "i": 8, "status": "ok", "task_id": "TB-3041", "model": "deepseek/deepseek-v3.2", "cost_usd": 0.000240632}
-{"seed": ["P-0201", "P-0202"], "i": 9, "status": "ok", "task_id": "TB-3042", "model": "qwen/qwen3-next-80b-a3b-instruct", "cost_usd": 0.0005244}
+{"seed": ["P-0201", "P-0202"], "i": 9, "status": "ok", "task_id": "TB-3042", "model": "qwen/qwen/qwen3.5-4b-instruct", "cost_usd": 0.0005244}
 {"seed": ["P-0902"], "i": 0, "status": "json_parse_failed", "preview": "{\n  \"prospect_meta\": {\n    \"domain\": \"synth-ml-7.example\",\n    \"persona\": \"Director of Engineering\",\n    \"timezone\": \"America/Chicago\",\n    \"company_name\": \"SynthML Innovations\"\n  },\n  \"hiring_signal_"}
 {"seed": ["P-0902"], "i": 1, "status": "json_parse_failed", "preview": "{\n  \"prospect_meta\": {\n    \"domain\": \"synth-ml-17.example\",\n    \"persona\": \"Head of AI Engineering\",\n    \"timezone\": \"America/Los_Angeles\",\n    \"company_name\": \"SynthML-17\"\n  },\n  \"hiring_signal_brief"}
 {"seed": ["P-0902"], "i": 2, "status": "json_parse_failed", "preview": "{\n  \"prospect_meta\": {\n    \"domain\": \"synth-ml-7.example\",\n    \"persona\": \"VP of Engineering\",\n    \"timezone\": \"America/Los_Angeles\",\n    \"company_name\": \"SynthML Innovations\"\n  },\n  \"hiring_signal_br"}
-{"seed": ["P-0902"], "i": 3, "status": "ok", "task_id": "TB-3043", "model": "qwen/qwen3-next-80b-a3b-instruct", "cost_usd": 0.000442065}
+{"seed": ["P-0902"], "i": 3, "status": "ok", "task_id": "TB-3043", "model": "qwen/qwen/qwen3.5-4b-instruct", "cost_usd": 0.000442065}
 {"seed": ["P-0902"], "i": 4, "status": "ok", "task_id": "TB-3044", "model": "deepseek/deepseek-v3.2", "cost_usd": 0.00116312}
 {"seed": ["P-0902"], "i": 5, "status": "json_parse_failed", "preview": "{\n  \"prospect_meta\": {\n    \"domain\": \"synth-ml-7.example\",\n    \"persona\": \"Head of AI Engineering\",\n    \"timezone\": \"America/Los_Angeles\",\n    \"company_name\": \"SynthML Technologies\"\n  },\n  \"hiring_sig"}
 {"seed": ["P-0902"], "i": 6, "status": "ok", "task_id": "TB-3045", "model": "deepseek/deepseek-v3.2", "cost_usd": 0.000291676}
@@ -51,10 +51,10 @@
 {"seed": ["P-0902"], "i": 8, "status": "json_parse_failed", "preview": "{\n  \"prospect_meta\": {\n    \"domain\": \"synth-ml-7.example\",\n    \"persona\": \"Head of AI Engineering\",\n    \"timezone\": \"America/New_York\",\n    \"company_name\": \"SynthML Solutions\"\n  },\n  \"hiring_signal_br"}
 {"seed": ["P-0902"], "i": 9, "status": "json_parse_failed", "preview": "{\n  \"prospect_meta\": {\n    \"domain\": \"synth-ml-17.example\",\n    \"persona\": \"Head of AI Engineering\",\n    \"timezone\": \"America/Los_Angeles\",\n    \"company_name\": \"SynthML-17\"\n  },\n  \"hiring_signal_brief"}
 {"seed": ["P-0101", "P-0103"], "i": 0, "status": "ok", "task_id": "TB-3046", "model": "deepseek/deepseek-v3.2", "cost_usd": 0.0005768}
-{"seed": ["P-0101", "P-0103"], "i": 1, "status": "ok", "task_id": "TB-3047", "model": "qwen/qwen3-next-80b-a3b-instruct", "cost_usd": 0.00026139}
+{"seed": ["P-0101", "P-0103"], "i": 1, "status": "ok", "task_id": "TB-3047", "model": "qwen/qwen/qwen3.5-4b-instruct", "cost_usd": 0.00026139}
 {"seed": ["P-0101", "P-0103"], "i": 2, "status": "ok", "task_id": "TB-3048", "model": "deepseek/deepseek-v3.2", "cost_usd": 0.00018112}
-{"seed": ["P-0101", "P-0103"], "i": 3, "status": "ok", "task_id": "TB-3049", "model": "qwen/qwen3-next-80b-a3b-instruct", "cost_usd": 0.0002677}
+{"seed": ["P-0101", "P-0103"], "i": 3, "status": "ok", "task_id": "TB-3049", "model": "qwen/qwen/qwen3.5-4b-instruct", "cost_usd": 0.0002677}
 {"seed": ["P-0101", "P-0103"], "i": 4, "status": "ok", "task_id": "TB-3050", "model": "deepseek/deepseek-v3.2", "cost_usd": 0.00017466}
-{"seed": ["P-0101", "P-0103"], "i": 5, "status": "ok", "task_id": "TB-3051", "model": "qwen/qwen3-next-80b-a3b-instruct", "cost_usd": 0.0001980225}
+{"seed": ["P-0101", "P-0103"], "i": 5, "status": "ok", "task_id": "TB-3051", "model": "qwen/qwen/qwen3.5-4b-instruct", "cost_usd": 0.0001980225}
 {"seed": ["P-0101", "P-0103"], "i": 6, "status": "ok", "task_id": "TB-3052", "model": "deepseek/deepseek-v3.2", "cost_usd": 0.000201124}
-{"seed": ["P-0101", "P-0103"], "i": 7, "status": "ok", "task_id": "TB-3053", "model": "qwen/qwen3-next-80b-a3b-instruct", "cost_usd": 0.00030195}
+{"seed": ["P-0101", "P-0103"], "i": 7, "status": "ok", "task_id": "TB-3053", "model": "qwen/qwen/qwen3.5-4b-instruct", "cost_usd": 0.00030195}

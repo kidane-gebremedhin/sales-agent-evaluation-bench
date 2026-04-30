@@ -651,14 +651,14 @@ def main():
             "rejected_generator_family": "template:style_guide_bad",
             "judge_family": "offline_stub_evaluator",
             "note": ("No model-family overlap. In live mode: chosen rewrites via "
-                     "DeepSeek V3.2; judge via Qwen3-Next-80B-A3B."),
+                     "DeepSeek V3.2; judge via qwen/qwen/qwen3.5-4b-instruct."),
         },
         "simpo_training_config": {
             "algorithm": "SimPO",
             "beta": 2.0,
             "gamma_sweep": [0.3, 0.5, 1.0, 1.5],
             "gamma_default": 0.5,
-            "backbone": "Qwen/Qwen2.5-1.5B-Instruct",
+            "backbone": "qwen/qwen/qwen3.5-4b-instruct",
             "adapter": "LoRA",
             "lora_rank": 16,
             "lora_alpha": 32,

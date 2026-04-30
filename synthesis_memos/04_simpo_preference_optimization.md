@@ -20,7 +20,7 @@ SimPO outperforms DPO by up to 6.4 points on AlpacaEval 2 and 7.5 points on Aren
 
 The length-normalization design is critical for our use case. Tenacious cold outreach is constrained to ≤120 words. DPO's unnormalized log-probability reward would penalize short, well-formed emails relative to longer, verbose ones — precisely the anti-pattern the style guide bans. SimPO's average-log-probability reward correctly scores a terse, signal-dense 89-word cold email (GOOD #1 in the style guide) higher than a 152-word self-promotion wall (BAD #1).
 
-The reference-free property is a hard constraint: on a free Colab T4 with 16 GB VRAM, loading Qwen 3.5 2B in 16-bit LoRA plus a frozen reference copy would not fit. SimPO's elimination of the reference model is what makes our training budget ($0 compute) feasible.
+The reference-free property is a hard constraint: on a free Colab T4 with 16 GB VRAM, loading qwen/qwen/qwen3.5-4b-instruct in 16-bit LoRA plus a frozen reference copy would not fit. SimPO's elimination of the reference model is what makes our training budget ($0 compute) feasible.
 
 ## Where I Disagree — Target Margin Sensitivity
 
@@ -35,6 +35,6 @@ The paper recommends γ between 0.5 and 1.5 based on general chat benchmarks (Al
 For our preference pairs, I construct:
 - **Chosen:** Corrected outputs that pass the scoring evaluator (all five tone markers ≥ 4/5) plus deterministic checks.
 - **Rejected:** Probe-triggered failures from the training partition — outputs that fail one or more evaluator dimensions.
-- **Preference-leakage prevention:** Chosen rewrites use DeepSeek V3.2; the judge filter uses Qwen3-Next-80B-A3B (different model family, per Li et al. 2025).
+- **Preference-leakage prevention:** Chosen rewrites use DeepSeek V3.2; the judge filter uses qwen/qwen/qwen3.5-4b-instruct (different model family, per Li et al. 2025).
 
 β is set to 2.0 initially (SimPO's recommended range), with the γ sweep above.

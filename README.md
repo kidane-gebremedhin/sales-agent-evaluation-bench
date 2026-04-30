@@ -63,8 +63,8 @@ python training_data/check_contamination.py            # verify held-out isolati
 
 ### Act IV — Train, Ablate, and Measure (Google Colab T4 + Unsloth)
 
-> **Runtime:** Free-tier Colab T4 (16 GB VRAM).
-> Estimated wall-time: ~25 min per γ value, ~2 hours for the full sweep.
+> **Runtime:** Free-tier Colab T4 (16 GB VRAM), 4-bit QLoRA via Unsloth.
+> Estimated wall-time: ~40-55 min per γ value, ~3-4 hours for the full sweep.
 
 #### Step 0 — Clone and set up the Colab runtime
 
@@ -104,7 +104,7 @@ Expected output:
 
 ```
 SimPO training — γ=0.5, β=2.0
-Model: Qwen/Qwen2.5-1.5B-Instruct
+Model: qwen/qwen/qwen3.5-4b-instruct
 LoRA: r=16, α=32
 [1/4] Loading preference pairs...
   Total pairs: 3103
@@ -184,7 +184,7 @@ files.download('results.zip')
 | Parameter | Value | Rationale |
 |---|---|---|
 | Algorithm | SimPO | Reference-free → fits T4 VRAM (no frozen ref model) |
-| Backbone | `Qwen/Qwen2.5-1.5B-Instruct` | Small enough for 4-bit LoRA on T4 |
+| Backbone | `qwen/qwen/qwen3.5-4b-instruct` | Runs on T4 with 4-bit QLoRA + gradient checkpointing |
 | LoRA rank / alpha | 16 / 32 | Standard for 1–2B models |
 | β (reward scaling) | 2.0 | SimPO recommended default |
 | γ (target margin) | sweep: 0.3, 0.5, 1.0, 1.5 | Predicted optimal: 0.3–0.8 for short emails |

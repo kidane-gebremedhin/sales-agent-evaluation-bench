@@ -38,7 +38,7 @@ COST_CAP_USD = float(os.environ.get("TB_JUDGE_COST_CAP_USD", "0.30"))
 # OpenRouter dev-tier pricing (approximate, per challenge spec).
 # Input/output per 1M tokens. Conservative — actual cost is usually lower.
 TIER_RATES = {
-    "qwen/qwen3-next-80b-a3b-instruct": (0.10, 0.30),
+    "qwen/qwen/qwen3.5-4b-instruct": (0.10, 0.30),
     "deepseek/deepseek-v3.2": (0.20, 0.80),
 }
 

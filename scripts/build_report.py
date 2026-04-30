@@ -285,7 +285,7 @@ Four modes ran in parallel against the failure-mode mix from the audit:
 |---|---|---|---:|---:|
 | `trace_derived` | local (Crunchbase ODM × layoffs.csv × synthetic_prospects joins) | $0.00 | 90 | 89 |
 | `programmatic` | local (5 sweeps over layoff_pct, interim CTO, bench overcommit, AI-maturity gate, role velocity) | $0.00 | 92 | 89 |
-| `multi_llm_synthesis` | OpenRouter `deepseek/deepseek-v3.2` + `qwen/qwen3-next-80b-a3b-instruct` (rotated) | $0.021 | 53 | 26 |
+| `multi_llm_synthesis` | OpenRouter `deepseek/deepseek-v3.2` + `qwen/qwen/qwen3.5-4b-instruct` (rotated) | $0.021 | 53 | 26 |
 | `hand_authored` | Trainee, 33 unique adversarial specs covering 26 distinct probe IDs | $0.00 | 35 | 35 |
 
 Multi-LLM synthesis output went through a **live judge filter** (DeepSeek V3.2; cost $0.008; 4/5 minimum on three pointwise dimensions: input_coherence, ground_truth_verifiability, rubric_application_clarity) which rejected 27 of 53 raw outputs. Preference-leakage policy committed in `methodology.md`: a model never judges a task it generated.
@@ -366,7 +366,7 @@ Each example below shows: input fields, ground-truth (where applicable), the eva
 | Day | Act | Deliverable |
 |---|---|---|
 | **4** | III — Method selection + training-data prep | Read 3 path-specific papers (DPO, SimPO, Prometheus 2 / Preference Leakage); convert `train/` → preference pairs (chosen vs rejected) using probe-triggered failures (rejected) and dev-tier model rewrites (chosen) with cross-family rotation. Target: 800–1500 preference pairs after quality filter. Path-specific synthesis memos committed. |
-| **5 morning** | IV — Train | One core LoRA SimPO run on Qwen 3.5 0.8B or 2B via Unsloth on Colab T4. 30–90 minutes wall time. Loss curves logged to `training/training_run.log`. |
+| **5 morning** | IV — Train | One core LoRA SimPO run on qwen/qwen/qwen3.5-4b-instruct via Unsloth on Colab T4. 30–90 minutes wall time. Loss curves logged to `training/training_run.log`. |
 | **5 afternoon + 6** | IV — Ablate, measure | Three sealed-slice eval-tier passes on `held_out/`: Delta A (trained vs Week 10 baseline; gate: > 0 with p < 0.05 paired bootstrap), Delta B (trained vs prompt-engineered same-backbone), Delta C (informational — Week 10 τ² score reused). Cost-Pareto reported per-task. |
 | **7** | V — Publish | HuggingFace dataset push, model adapter push, technical blog post (1200–2000 words), community engagement (planned: a τ²-Bench GitHub issue + an EleutherAI Discord post). Two-page memo (decision page + skeptic's appendix) for the Tenacious CEO/CFO. |
 
