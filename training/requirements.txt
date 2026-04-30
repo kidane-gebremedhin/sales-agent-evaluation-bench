@@ -1,0 +1,17 @@
+# SimPO training — Unsloth + TRL on Colab T4 (16 GB VRAM)
+# Install: pip install -r training/requirements.txt
+
+# Core
+torch>=2.1.0
+transformers>=4.45.0
+trl>=0.12.0
+datasets>=2.20.0
+accelerate>=0.34.0
+peft>=0.13.0
+
+# Unsloth (install separately for best compatibility)
+# pip install "unsloth[colab-new] @ git+https://github.com/unslothai/unsloth.git"
+
+# Evaluation & logging
+scikit-learn>=1.4.0
+wandb>=0.18.0

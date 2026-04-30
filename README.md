@@ -3,7 +3,7 @@
 **Week 11 / TRP1 Challenge — Ground Truth.**
 *Building the Sales Evaluation Bench and aligning the Conversion Engine.*
 
-> Status: **Act I (Audit & Schema Design) — in progress**, 2026-04-29.
+> Status: **Act IV (Training) — ready to run**, 2026-04-30.
 > Predecessor: Week 10 Conversion Engine
 > ([../conversion-engine](../conversion-engine)).
 
@@ -51,9 +51,144 @@ scripts/                  # Helpers (contamination_check, etc.)
   is graded quality on real prospect briefs, not invariant pass/fail
   on fixtures.**
 
-## How to run (after Act I)
+## How to run
+
+### Acts I–III (local, no GPU)
+
+```bash
+python scoring_evaluator.py --self-test                # validate rubric on 3 example tasks
+python training_data/prepare_preference_pairs.py       # regenerate preference pairs from train partition
+python training_data/check_contamination.py            # verify held-out isolation
+```
+
+### Act IV — Train, Ablate, and Measure (Google Colab T4 + Unsloth)
+
+> **Runtime:** Free-tier Colab T4 (16 GB VRAM).
+> Estimated wall-time: ~25 min per γ value, ~2 hours for the full sweep.
+
+#### Step 0 — Clone and set up the Colab runtime
+
+Open a **Google Colab** notebook. Set the runtime to **T4 GPU**:
+`Runtime → Change runtime type → T4 GPU`.
+
+```python
+# Clone the repo
+!git clone https://github.com/<your-handle>/sales-agent-evaluation-bench.git
+%cd sales-agent-evaluation-bench
+```
+
+#### Step 1 — Install dependencies
+
+```python
+# Unsloth (must be installed first for Colab compatibility)
+!pip install "unsloth[colab-new] @ git+https://github.com/unslothai/unsloth.git"
+
+# Core training stack
+!pip install -r training/requirements.txt
+```
+
+Verify the install:
+
+```python
+!python -c "from unsloth import FastLanguageModel; print('Unsloth OK')"
+!python -c "from trl import CPOTrainer; print('TRL OK')"
+```
+
+#### Step 2 — Dry run (validate config without training)
+
+```python
+!python training/train_simpo.py --dry-run
+```
+
+Expected output:
 
 ```
-make schema-validate       # validate schema.json against scoring_evaluator
-make eval-dummy            # run scoring_evaluator.py on the 3 example tasks
+SimPO training — γ=0.5, β=2.0
+Model: Qwen/Qwen2.5-1.5B-Instruct
+LoRA: r=16, α=32
+[1/4] Loading preference pairs...
+  Total pairs: 3103
+  Train: ~2792, Eval: ~310
+[DRY RUN] Would train with the above config. Exiting.
 ```
+
+#### Step 3 — Train a single γ (quick test)
+
+```python
+# Train with default γ=0.5 (disable W&B if not configured)
+!WANDB_DISABLED=true python training/train_simpo.py --gamma 0.5
+```
+
+The adapter is saved to `training/checkpoints/gamma_0.5/final/`.
+
+#### Step 4 — Full γ sweep (ablation)
+
+```python
+# Train all four γ values: 0.3, 0.5, 1.0, 1.5
+!WANDB_DISABLED=true python training/train_simpo.py --sweep
+```
+
+Or use the shell script:
+
+```python
+!WANDB_DISABLED=true bash training/gamma_sweep.sh
+```
+
+**Outputs per γ value:**
+
+| Path | Contents |
+|---|---|
+| `training/checkpoints/gamma_<γ>/final/` | Saved LoRA adapter + tokenizer |
+| `training/checkpoints/gamma_<γ>/train_metrics.json` | Loss, runtime, config |
+| `training/logs/gamma_sweep_summary.json` | Combined sweep metrics |
+
+#### Step 5 — Evaluate on dev partition
+
+```python
+# Evaluate all trained adapters against the scoring evaluator
+!python training/eval_dev.py --sweep
+```
+
+Or evaluate a single adapter:
+
+```python
+!python training/eval_dev.py --adapter training/checkpoints/gamma_0.5/final --gamma 0.5
+```
+
+Baseline comparison (no adapter):
+
+```python
+!python training/eval_dev.py --baseline
+```
+
+**Evaluation outputs:**
+
+| Path | Contents |
+|---|---|
+| `ablations/ablation_results.json` | γ sweep results (preference accuracy + dev agreement) |
+| `ablations/held_out_traces.jsonl` | Per-task critic decisions across all γ values |
+| `ablations/eval_gamma_<γ>.json` | Single-adapter evaluation detail |
+| `ablations/baseline_results.json` | Base model (no adapter) preference accuracy |
+
+#### Step 6 — Download results
+
+```python
+# Zip and download from Colab
+!zip -r results.zip training/checkpoints/ ablations/ training/logs/
+from google.colab import files
+files.download('results.zip')
+```
+
+### Training configuration reference
+
+| Parameter | Value | Rationale |
+|---|---|---|
+| Algorithm | SimPO | Reference-free → fits T4 VRAM (no frozen ref model) |
+| Backbone | `Qwen/Qwen2.5-1.5B-Instruct` | Small enough for 4-bit LoRA on T4 |
+| LoRA rank / alpha | 16 / 32 | Standard for 1–2B models |
+| β (reward scaling) | 2.0 | SimPO recommended default |
+| γ (target margin) | sweep: 0.3, 0.5, 1.0, 1.5 | Predicted optimal: 0.3–0.8 for short emails |
+| Batch size | 4 × 4 grad accum = 16 eff. | T4 VRAM budget |
+| Precision | bf16 + 4-bit QLoRA | Via Unsloth |
+| Epochs | 3 | — |
+| Max sequence length | 512 tokens | — |
