@@ -196,7 +196,6 @@ def evaluate_on_dev_with_critic(
         import torch
 
         def _reward(candidate_text: str) -> float:
-            from training.train_simpo import _build_prompt_for_eval  # noqa
             prompt = f"Evaluate this sales outreach draft on '{dim}'."
             full = prompt + "\n" + candidate_text
             inputs = tokenizer(full, return_tensors="pt", truncation=True, max_length=512)
