@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Act IV — SimPO training with Unsloth + TRL.
 
-Trains a LoRA-adapted qwen/qwen3.5-4b-instruct critic using SimPO on the
+Trains a LoRA-adapted unsloth/Qwen3-4B-unsloth-bnb-4bit critic using SimPO on the
 preference pairs from Act III.  Designed for a free Colab T4 (16 GB VRAM).
 
 Usage:
@@ -23,6 +23,12 @@ Environment variables:
 """
 
 from __future__ import annotations
+
+# Unsloth must be imported before trl/transformers/peft for all optimizations
+try:
+    import unsloth  # noqa: F401
+except ImportError:
+    pass
 
 import argparse
 import json
@@ -46,7 +52,7 @@ COST_LOG = REPO / "cost_log.md"
 # ---------------------------------------------------------------------------
 # Defaults (from preference_pair_stats.json)
 # ---------------------------------------------------------------------------
-_CONFIG = {"model_id": "qwen/qwen3.5-4b-instruct"}
+_CONFIG = {"model_id": "unsloth/Qwen3-4B-unsloth-bnb-4bit"}
 MODEL_ID = _CONFIG["model_id"]
 LORA_RANK = 16
 LORA_ALPHA = 32
@@ -104,6 +110,7 @@ def build_model_and_tokenizer(model_id: str | None = None, use_unsloth: bool = T
         model_id = _CONFIG["model_id"]
     if use_unsloth:
         try:
+            from unsloth import FastLanguageModel
             model, tokenizer = FastLanguageModel.from_pretrained(
                 model_name=model_id,
                 max_seq_length=MAX_LENGTH,
@@ -213,9 +220,15 @@ def train_single_gamma(
 
     # TRL's CPOTrainer with loss_type="simpo" implements SimPO
     print("[3/4] Configuring SimPO trainer...")
+    # Set tensorboard logging dir via env var (logging_dir kwarg deprecated)
+    os.environ["TENSORBOARD_LOGGING_DIR"] = str(log_dir)
+
+    # Estimate warmup_steps from warmup_ratio (warmup_ratio kwarg deprecated)
+    estimated_total_steps = max(1, (int(n_pairs * 0.9) // (BATCH_SIZE * GRAD_ACCUM))) * NUM_EPOCHS
+    warmup_steps = int(estimated_total_steps * WARMUP_RATIO)
+
     training_args = CPOConfig(
         output_dir=str(output_dir),
-        logging_dir=str(log_dir),
         run_name=run_name,
 
         # SimPO-specific
@@ -233,7 +246,7 @@ def train_single_gamma(
         gradient_accumulation_steps=GRAD_ACCUM,
         learning_rate=LEARNING_RATE,
         lr_scheduler_type="cosine",
-        warmup_ratio=WARMUP_RATIO,
+        warmup_steps=warmup_steps,
         weight_decay=WEIGHT_DECAY,
         max_grad_norm=MAX_GRAD_NORM,
         max_length=MAX_LENGTH,
@@ -261,12 +274,18 @@ def train_single_gamma(
         fp16 = True,    # Set this to True for Colab T4
     )
 
+    # Workaround: trl 0.24 expects model.warnings_issued but
+    # transformers 5.5 removed it from PreTrainedModel, causing
+    # AttributeError through peft's __getattr__ chain.
+    if not hasattr(model, 'warnings_issued'):
+        model.warnings_issued = {}
+
     trainer = CPOTrainer(
         model=model,
         args=training_args,
         train_dataset=train_ds,
         eval_dataset=eval_ds,
-        tokenizer=tokenizer,
+        processing_class=tokenizer,
     )
 
     # Train

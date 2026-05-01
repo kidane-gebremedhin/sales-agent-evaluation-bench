@@ -107,27 +107,35 @@ Colab env: yes
 
 #### Step 1 — Install Unsloth + dependencies (no-deps pattern)
 
-> **Key principle:** install Unsloth *first*, then companion packages with
-> `--no-deps` so pip never pulls conflicting transitive dependencies.
+> **Key principle:** Colab's default `transformers`, `trl`, and `datasets` are
+> *too new* for Unsloth (May 2026). We downgrade them to the latest versions
+> Unsloth supports, upgrade `torchao` (too old), and use `--no-deps` to
+> prevent pip from cascading into torch.
 
 ```python
-%%capture
-# ── 1a. Auto-detect torch/CUDA and install the correct Unsloth wheel ──
-# This uses Unsloth's official auto-installer on top of Colab's PyTorch.
-!pip install packaging   # ensure 'packaging' is available for the auto-detect script
-!wget -qO- https://raw.githubusercontent.com/unslothai/unsloth/main/unsloth/_auto_install.py | python - | sh
+# ── 1a. Fix version-incompatible packages Colab ships ──
+# These MUST use --no-deps so pip doesn't try to swap out torch.
+!pip install --no-deps \
+    "transformers==5.5.0" \
+    "trl==0.24.0" \
+    "datasets==3.6.0" \
+    "torchao>=0.13.0"
 
-# ── 1b. Install / refresh companion packages WITHOUT touching torch ──
-!pip install --no-deps trl peft accelerate bitsandbytes xformers triton \
-    cut_cross_entropy unsloth_zoo sentencepiece protobuf
+# ── 1b. Install Unsloth ecosystem (--no-deps) ──
+!pip install --no-deps "bitsandbytes>=0.46.1" accelerate xformers peft \
+    triton cut_cross_entropy unsloth_zoo sentencepiece protobuf
+!pip install --no-deps unsloth
 
-# ── 1c. Install remaining project deps (datasets, scikit-learn, wandb…) ──
-!pip install datasets scikit-learn wandb huggingface_hub hf_transfer
+# ── 1c. Install missing deps that Unsloth/unsloth_zoo require ──
+!pip install tyro msgspec
+
+# ── 1d. Install remaining project deps (safe to resolve normally) ──
+!pip install scikit-learn wandb huggingface_hub hf_transfer
 ```
 
 > [!TIP]
-> The `%%capture` magic hides the verbose pip output. Remove it while
-> debugging if you need to see the full install log.
+> If you still see red "ERROR" about dependency conflicts, **ignore them** —
+> `--no-deps` intentionally skips resolution. The versions above are tested.
 
 **After this cell finishes → Restart the runtime once:**
 `Runtime → Restart session`, then continue from Step 1.1.
@@ -170,7 +178,7 @@ Expected output:
 
 ```
 SimPO training — γ=0.5, β=2.0
-Model: qwen/qwen3.5-4b-instruct
+Model: unsloth/Qwen3-4B-unsloth-bnb-4bit
 LoRA: r=16, α=32
 [1/4] Loading preference pairs...
   Total pairs: <from training_data/preference_pairs.jsonl>
@@ -267,7 +275,7 @@ files.download('results.zip')
 | Parameter | Value | Rationale |
 |---|---|---|
 | Algorithm | SimPO | Reference-free → fits T4 VRAM (no frozen ref model) |
-| Backbone | `qwen/qwen3.5-4b-instruct` | Runs on T4 with 4-bit QLoRA + gradient checkpointing |
+| Backbone | `unsloth/Qwen3-4B-unsloth-bnb-4bit` | Runs on T4 with 4-bit QLoRA + gradient checkpointing |
 | LoRA rank / alpha | 16 / 32 | Standard for 1–2B models |
 | β (reward scaling) | 2.0 | SimPO recommended default |
 | γ (target margin) | sweep: 0.3, 0.5, 1.0, 1.5 | Predicted optimal: 0.3–0.8 for short emails |

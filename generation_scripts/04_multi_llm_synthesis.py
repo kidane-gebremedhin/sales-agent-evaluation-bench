@@ -45,11 +45,11 @@ COST_CAP_USD = float(os.environ.get("TB_SYNTH_COST_CAP_USD", "0.20"))
 # Rotated dev-tier models — rotation policy committed in methodology.md.
 SYNTH_MODELS = [
     "deepseek/deepseek-v3.2",
-    "Qwen/Qwen3.5-4b-instruct",
+    "unsloth/Qwen3-4B-unsloth-bnb-4bit",
 ]
 TIER_RATES = {
     "deepseek/deepseek-v3.2": (0.20, 0.80),
-    "Qwen/Qwen3.5-4b-instruct": (0.10, 0.30),
+    "unsloth/Qwen3-4B-unsloth-bnb-4bit": (0.10, 0.30),
 }
 
 
