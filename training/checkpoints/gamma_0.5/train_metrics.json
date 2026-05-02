@@ -1,0 +1,13 @@
+{
+  "train_runtime": 3930.8068,
+  "train_samples_per_second": 0.719,
+  "train_steps_per_second": 0.045,
+  "total_flos": 0.0,
+  "train_loss": 0.26446692248159165,
+  "epoch": 3.0,
+  "gamma": 0.5,
+  "beta": 2.0,
+  "elapsed_seconds": 3932.8,
+  "model": "unsloth/Qwen3-4B-unsloth-bnb-4bit",
+  "backend": "unsloth"
+}

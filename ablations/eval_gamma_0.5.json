@@ -1,0 +1,315 @@
+{
+  "gamma": 0.5,
+  "adapter_path": "training/checkpoints/gamma_0.5/final",
+  "preference_accuracy": {
+    "preference_accuracy": 1.0,
+    "avg_reward_gap": 1.33312,
+    "total_pairs": 104,
+    "correct": 104
+  },
+  "dev_agreement": {
+    "judge_evaluator_agreement": 1.0,
+    "agree": 33,
+    "disagree": 0,
+    "total_tasks": 33
+  },
+  "dev_per_task": [
+    {
+      "task_id": "TB-0045",
+      "dimension": "tone_preservation",
+      "eval_good_score": 0.88,
+      "eval_bad_score": 0.4,
+      "critic_good_reward": -5.554688,
+      "critic_bad_reward": -7.660156,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-0087",
+      "dimension": "tone_preservation",
+      "eval_good_score": 0.88,
+      "eval_bad_score": 0.4,
+      "critic_good_reward": -5.554688,
+      "critic_bad_reward": -7.660156,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-0038",
+      "dimension": "tone_preservation",
+      "eval_good_score": 0.88,
+      "eval_bad_score": 0.4,
+      "critic_good_reward": -5.195312,
+      "critic_bad_reward": -7.660156,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-0057",
+      "dimension": "tone_preservation",
+      "eval_good_score": 0.88,
+      "eval_bad_score": 0.4,
+      "critic_good_reward": -5.214844,
+      "critic_bad_reward": -7.660156,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-0052",
+      "dimension": "tone_preservation",
+      "eval_good_score": 0.88,
+      "eval_bad_score": 0.4,
+      "critic_good_reward": -5.214844,
+      "critic_bad_reward": -7.660156,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-0029",
+      "dimension": "tone_preservation",
+      "eval_good_score": 0.88,
+      "eval_bad_score": 0.4,
+      "critic_good_reward": -5.214844,
+      "critic_bad_reward": -7.660156,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-0078",
+      "dimension": "tone_preservation",
+      "eval_good_score": 0.88,
+      "eval_bad_score": 0.4,
+      "critic_good_reward": -5.554688,
+      "critic_bad_reward": -7.660156,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-0075",
+      "dimension": "tone_preservation",
+      "eval_good_score": 0.88,
+      "eval_bad_score": 0.4,
+      "critic_good_reward": -5.230469,
+      "critic_bad_reward": -7.660156,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-0080",
+      "dimension": "tone_preservation",
+      "eval_good_score": 0.88,
+      "eval_bad_score": 0.4,
+      "critic_good_reward": -5.554688,
+      "critic_bad_reward": -7.660156,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-0059",
+      "dimension": "tone_preservation",
+      "eval_good_score": 0.88,
+      "eval_bad_score": 0.4,
+      "critic_good_reward": -5.230469,
+      "critic_bad_reward": -7.660156,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-0071",
+      "dimension": "tone_preservation",
+      "eval_good_score": 0.88,
+      "eval_bad_score": 0.4,
+      "critic_good_reward": -5.207031,
+      "critic_bad_reward": -7.660156,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-0066",
+      "dimension": "tone_preservation",
+      "eval_good_score": 0.88,
+      "eval_bad_score": 0.4,
+      "critic_good_reward": -5.554688,
+      "critic_bad_reward": -7.660156,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-0005",
+      "dimension": "tone_preservation",
+      "eval_good_score": 0.88,
+      "eval_bad_score": 0.4,
+      "critic_good_reward": -5.554688,
+      "critic_bad_reward": -7.660156,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-0043",
+      "dimension": "tone_preservation",
+      "eval_good_score": 0.88,
+      "eval_bad_score": 0.4,
+      "critic_good_reward": -5.554688,
+      "critic_bad_reward": -7.660156,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-0034",
+      "dimension": "bench_honesty",
+      "eval_good_score": 0.75,
+      "eval_bad_score": 0.55,
+      "critic_good_reward": -5.222656,
+      "critic_bad_reward": -7.546875,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-0041",
+      "dimension": "bench_honesty",
+      "eval_good_score": 0.75,
+      "eval_bad_score": 0.55,
+      "critic_good_reward": -5.222656,
+      "critic_bad_reward": -7.546875,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-0013",
+      "dimension": "bench_honesty",
+      "eval_good_score": 0.75,
+      "eval_bad_score": 0.55,
+      "critic_good_reward": -5.21875,
+      "critic_bad_reward": -7.546875,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-0006",
+      "dimension": "bench_honesty",
+      "eval_good_score": 0.75,
+      "eval_bad_score": 0.55,
+      "critic_good_reward": -5.21875,
+      "critic_bad_reward": -7.546875,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-1049",
+      "dimension": "bench_honesty",
+      "eval_good_score": 0.75,
+      "eval_bad_score": 0.55,
+      "critic_good_reward": -5.199219,
+      "critic_bad_reward": -7.546875,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-1052",
+      "dimension": "bench_honesty",
+      "eval_good_score": 0.75,
+      "eval_bad_score": 0.55,
+      "critic_good_reward": -4.882812,
+      "critic_bad_reward": -7.546875,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-1062",
+      "dimension": "bench_honesty",
+      "eval_good_score": 0.75,
+      "eval_bad_score": 0.55,
+      "critic_good_reward": -4.867188,
+      "critic_bad_reward": -7.546875,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-1063",
+      "dimension": "bench_honesty",
+      "eval_good_score": 0.75,
+      "eval_bad_score": 0.55,
+      "critic_good_reward": -4.882812,
+      "critic_bad_reward": -7.546875,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-1059",
+      "dimension": "bench_honesty",
+      "eval_good_score": 0.75,
+      "eval_bad_score": 0.55,
+      "critic_good_reward": -4.84375,
+      "critic_bad_reward": -7.546875,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-1050",
+      "dimension": "bench_honesty",
+      "eval_good_score": 0.75,
+      "eval_bad_score": 0.55,
+      "critic_good_reward": -4.867188,
+      "critic_bad_reward": -7.546875,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-1060",
+      "dimension": "bench_honesty",
+      "eval_good_score": 0.75,
+      "eval_bad_score": 0.55,
+      "critic_good_reward": -4.84375,
+      "critic_bad_reward": -7.546875,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-1061",
+      "dimension": "bench_honesty",
+      "eval_good_score": 0.75,
+      "eval_bad_score": 0.55,
+      "critic_good_reward": -4.882812,
+      "critic_bad_reward": -7.546875,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-1088",
+      "dimension": "signal_grounding",
+      "eval_good_score": 1.0,
+      "eval_bad_score": 0.55,
+      "critic_good_reward": -5.097656,
+      "critic_bad_reward": -7.433594,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-1084",
+      "dimension": "signal_grounding",
+      "eval_good_score": 1.0,
+      "eval_bad_score": 0.55,
+      "critic_good_reward": -5.425781,
+      "critic_bad_reward": -7.433594,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-1092",
+      "dimension": "signal_grounding",
+      "eval_good_score": 1.0,
+      "eval_bad_score": 0.55,
+      "critic_good_reward": -5.125,
+      "critic_bad_reward": -7.433594,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-1090",
+      "dimension": "signal_grounding",
+      "eval_good_score": 1.0,
+      "eval_bad_score": 0.55,
+      "critic_good_reward": -5.105469,
+      "critic_bad_reward": -7.433594,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-3038",
+      "dimension": "bench_honesty",
+      "eval_good_score": 0.75,
+      "eval_bad_score": 0.55,
+      "critic_good_reward": -4.839844,
+      "critic_bad_reward": -7.546875,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-3033",
+      "dimension": "bench_honesty",
+      "eval_good_score": 0.75,
+      "eval_bad_score": 0.55,
+      "critic_good_reward": -4.839844,
+      "critic_bad_reward": -7.546875,
+      "agreement": true
+    },
+    {
+      "task_id": "TB-3042",
+      "dimension": "bench_honesty",
+      "eval_good_score": 0.75,
+      "eval_bad_score": 0.55,
+      "critic_good_reward": -4.867188,
+      "critic_bad_reward": -7.546875,
+      "agreement": true
+    }
+  ]
+}

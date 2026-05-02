@@ -1,0 +1,29 @@
+{
+  "description": "SimPO \u03b3 sweep ablation on Tenacious-Bench v0.1 dev partition",
+  "model": "unsloth/Qwen3-4B-unsloth-bnb-4bit",
+  "beta": 2.0,
+  "gamma_sweep": [
+    0.3,
+    0.5,
+    1.0,
+    1.5
+  ],
+  "results": [
+    {
+      "gamma": 0.5,
+      "adapter_path": "/content/sales-agent-evaluation-bench/training/checkpoints/gamma_0.5/final",
+      "preference_accuracy": {
+        "preference_accuracy": 1.0,
+        "avg_reward_gap": 1.33312,
+        "total_pairs": 104,
+        "correct": 104
+      },
+      "dev_agreement": {
+        "judge_evaluator_agreement": 1.0,
+        "agree": 33,
+        "disagree": 0,
+        "total_tasks": 33
+      }
+    }
+  ]
+}

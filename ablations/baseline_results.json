@@ -1,0 +1,10 @@
+{
+  "gamma": null,
+  "baseline": true,
+  "preference_accuracy": {
+    "preference_accuracy": 0.0865,
+    "avg_reward_gap": -0.18442,
+    "total_pairs": 104,
+    "correct": 9
+  }
+}
