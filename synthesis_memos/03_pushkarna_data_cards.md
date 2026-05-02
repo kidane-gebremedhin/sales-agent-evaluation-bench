@@ -10,9 +10,9 @@ Gebru's *Datasheets for Datasets* in the responsible-AI documentation
 stack. The central insight is that documentation must be **layered for
 multiple stakeholders**: a hurried product manager needs a one-line
 "what is this", a lead engineer needs a one-paragraph "should I use
-this", and a downstream auditor needs full provenance. The paper's
+this", and a downstream auditor needs full provenance (cf. §2.1 "Stakeholder Needs"). The paper's
 contribution is the **telescopic / periscopic / microscopic**
-framework — three depths of detail that a single artifact serves
+framework (§3.2 "Data Card Dimensions", pp. 4-5) — three depths of detail that a single artifact serves
 simultaneously, plus a recommended set of "essential facts" sections
 across the dataset lifecycle (origins, collection, annotation,
 intended use, quality, gaps).

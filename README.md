@@ -9,12 +9,16 @@
 
 ## What this repo will contain
 
-A 200–300 task evaluation dataset (`tenacious_bench_v0.1/`), a machine-
-verifiable scoring evaluator (`scoring_evaluator.py`), a contamination-
-checked partition (50/30/20 train/dev/held_out), a small trained
-adapter or judge that lifts the Week 10 agent on a Tenacious-specific
-failure mode, and the public artifacts: HuggingFace dataset, model card,
-and technical blog post.
+A 200–300 task evaluation dataset (`tenacious_bench_v0.1/`), a machine-verifiable scoring evaluator (`scoring_evaluator.py`), a contamination-checked partition (50/30/20 train/dev/held_out), and a small trained adapter that lifts the Week 10 agent on a Tenacious-specific failure mode.
+
+**Public Artifacts & Links:**
+*   **HuggingFace Dataset:** [kgutd/tenacious_bench_v0.1](https://huggingface.co/datasets/kgutd/tenacious_bench_v0.1)
+*   **HuggingFace Model:** [kgutd/Qwen3-4B-Tenacious-Critic-SimPO](https://huggingface.co/kgutd/Qwen3-4B-Tenacious-Critic-SimPO)
+*   **Technical Blog Post:** [Beyond Retail Benchmarks: Aligning a B2B Sales Agent via SimPO](https://huggingface.co/kgutd/Qwen3-4B-Tenacious-Critic-SimPO/discussions/1)
+
+## License
+*   **Dataset & Evaluation Material:** Creative Commons Attribution 4.0 International ([CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/))
+*   **Code & Scripting:** MIT License
 
 ## Layout
 

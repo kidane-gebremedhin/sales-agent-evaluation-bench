@@ -6,15 +6,15 @@
 
 ## Core Contribution
 
-SimPO replaces DPO's implicit reward (log-ratio between policy and reference model) with the **average log probability of the sequence** under the policy alone, eliminating the reference model entirely. It adds a **target reward margin** γ to the Bradley-Terry objective to enforce a minimum gap between winning and losing responses:
+SimPO replaces DPO's implicit reward (log-ratio between policy and reference model) with the **average log probability of the sequence** under the policy alone, eliminating the reference model entirely (§2 "Simple Preference Optimization", eq. 5). It adds a **target reward margin** γ to the Bradley-Terry objective to enforce a minimum gap between winning and losing responses:
 
 $$L_\text{SimPO}(\pi_\theta) = -\mathbb{E}\left[\log \sigma\left(\frac{\beta}{|y_w|}\log\pi_\theta(y_w|x) - \frac{\beta}{|y_l|}\log\pi_\theta(y_l|x) - \gamma\right)\right]$$
 
 Two key design properties:
-1. **Length normalization** — dividing by `|y|` prevents bias toward longer sequences.
+1. **Length normalization** — dividing by `|y|` prevents bias toward longer sequences (§2.1).
 2. **Reference-free** — halves GPU memory because no frozen reference model is loaded.
 
-SimPO outperforms DPO by up to 6.4 points on AlpacaEval 2 and 7.5 points on Arena-Hard. It also outperforms ORPO consistently across Mistral-7B and Llama-3-8B setups.
+SimPO outperforms DPO by up to 6.4 points on AlpacaEval 2 and 7.5 points on Arena-Hard (§3 "Experiments", Table 1). It also outperforms ORPO consistently across Mistral-7B and Llama-3-8B setups.
 
 ## What I Agree With — and Why It Fits Our Path B
 
@@ -24,7 +24,7 @@ The reference-free property is a hard constraint: on a free Colab T4 with 16 GB 
 
 ## Where I Disagree — Target Margin Sensitivity
 
-The paper recommends γ between 0.5 and 1.5 based on general chat benchmarks (AlpacaEval 2, MT-Bench, Arena-Hard). Our preference pairs are **not** general chat — they are short, format-constrained sales drafts where the difference between chosen and rejected is often a single tone violation (e.g., the word "bench" used externally, or an assertive claim on a weak signal). The reward gap between a GOOD #5 draft ("I cannot tell from the outside...") and a BAD #2 draft ("you are scaling aggressively") is subtle in log-probability space.
+The paper recommends γ between 0.5 and 1.5 based on general chat benchmarks like AlpacaEval 2 and Arena-Hard (§4.1 "Ablation Studies"). Our preference pairs are **not** general chat — they are short, format-constrained sales drafts where the difference between chosen and rejected is often a single tone violation (e.g., the word "bench" used externally, or an assertive claim on a weak signal). The reward gap between a GOOD #5 draft ("I cannot tell from the outside...") and a BAD #2 draft ("you are scaling aggressively") is subtle in log-probability space.
 
 **My prediction:** the optimal γ for our domain is lower than SimPO's general recommendation — likely 0.3–0.8. A γ of 1.5 would push the model to treat subtle tone violations as catastrophic reward drops, risking overcorrection where the judge rejects all borderline drafts. I will run a small γ sweep {0.3, 0.5, 1.0, 1.5} on the dev partition and report in ablation_results.json.
 
