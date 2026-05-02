@@ -138,29 +138,33 @@ def eval_critic_on_tasks(model, tokenizer, tasks: list[dict], mode_label: str) -
     return {"acc": acc, "total": total, "correct": correct, "cost_tokens": cost_tokens}
 
 def run_held_out_evals(adapter_path: str):
+    import os
     print("=" * 80)
     print(" Executing Sealed-Slice `held_out` Evaluations (Delta A, B, C)")
     print("=" * 80)
 
+    adapter_abs = str(Path(adapter_path).resolve())
+    if not os.path.exists(adapter_abs):
+        print(f"\n[ERROR] Adapter directory does not exist: {adapter_abs}")
+        print("-> If you restarted your Colab runtime, your local checkpoints were wiped.")
+        print("-> Please run Step 3 (`!python training/train_simpo.py --gamma 0.5`) again to regenerate the adapter, then retry this script.")
+        sys.exit(1)
+
     tasks = load_held_out_tasks()
     print(f"[i] Pre-loaded {len(tasks)} sealed held_out tasks.")
 
-    baseline_metrics = None
-    adapter_metrics = None
-    prompt_eng_metrics = None
-    
+    from peft import PeftModel
+
     # Eval 1: Baseline Architecture
     print("\n[>>] Loading Baseline Architecture")
-    base_model, base_tokenizer = load_model_components(None)
-    baseline_metrics = eval_critic_on_tasks(base_model, base_tokenizer, tasks, "BASE (Week 10 Style)")
-    
-    del base_model
-    import gc; gc.collect();
+    model, tokenizer = load_model_components(None)
+    baseline_metrics = eval_critic_on_tasks(model, tokenizer, tasks, "BASE (Week 10 Style)")
     
     # Eval 2: Adapter SimPO Architecture
-    print(f"\n[>>] Loading Tuned Adapter Architecture from {adapter_path}")
-    adapter_model, adapter_tokenizer = load_model_components(adapter_path)
-    adapter_metrics = eval_critic_on_tasks(adapter_model, adapter_tokenizer, tasks, "SimPO CRITIC")
+    print(f"\n[>>] Loading Tuned Adapter Architecture dynamically from {adapter_abs}")
+    # Instead of fully reloading the 4B parameters into GPU, attach the LoRA adapter to the existing model memory.
+    model = PeftModel.from_pretrained(model, adapter_abs)
+    adapter_metrics = eval_critic_on_tasks(model, tokenizer, tasks, "SimPO CRITIC")
 
     # Eval 3: Prompt Engineered Alternative (Reusing base model but simulating prompt penalty behavior)
     # To save VRAM toggling locally, we utilize the proxy metric framework built during prompt ablation in Week 10.
