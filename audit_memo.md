@@ -28,8 +28,8 @@ gaps emerged:
 1. **Segment-rule reasoning under signal conflict** — P-0001
    (layoff+funding misclassification) and P-0005 (pure-funding
    Segment 1) anchor the highest-cost failure. The Tenacious target-
-   failure-mode memo prices a single P-0001 miss at ≈$75k revenue
-   loss + a $50k brand tail. Retail has no analog: there is no
+   failure-mode memo prices a single P-0001 miss as a revenue
+   loss + a brand tail. Retail has no analog: there is no
    "post-layoff CFO" who will roast a wrong pitch on LinkedIn.
 
 2. **Bench-to-brief honesty** — P-0201 (Rust ask, zero bench), P-0202

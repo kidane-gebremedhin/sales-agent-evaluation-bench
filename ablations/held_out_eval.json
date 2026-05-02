@@ -1,0 +1,29 @@
+{
+    "description": "Sealed-slice evaluation on held_out partition for Delta A, B, and C.",
+    "adapter_path": "training/checkpoints/gamma_0.5/final",
+    "delta_analysis": {
+        "Delta_A": {
+            "description": "Trained vs Week 10 Baseline",
+            "adapter_acc": 1.0,
+            "baseline_acc": 0.0,
+            "delta": 1.0,
+            "gate_passed": true
+        },
+        "Delta_B": {
+            "description": "Trained vs Prompt-Engineered same-backbone",
+            "adapter_acc": 1.0,
+            "prompt_eng_acc": 0.35,
+            "delta": 0.65
+        },
+        "Delta_C": {
+            "description": "Informational \u2014 vs. generic retail \u03c4\u00b2 score (0.833)",
+            "adapter_acc": 1.0,
+            "retail_benchmark_acc": 0.833,
+            "delta": 0.167
+        }
+    },
+    "cost_pareto": {
+        "total_inference_tokens": 12917,
+        "accuracy_lift_per_10k_tokens": 0.774174
+    }
+}
